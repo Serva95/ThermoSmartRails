@@ -13,13 +13,13 @@ default: &default
   adapter: mysql2
   encoding: utf8mb4
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: root
-  password:
+  username: rails
+  password: A1b2C3d5
   host: localhost
 
 development:
   <<: *default
-  database: ThermoSmart_development
+  database: thermo_rails
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".

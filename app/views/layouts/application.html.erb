@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <title>Thermo Pi</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <%= stylesheet_link_tag 'css/main.css' %>
+
+  <%= javascript_include_tag 'jquery.min.js' %>
+  <%= javascript_include_tag 'intercooler-1.2.3.min.js' %>
+</head>
+
+<body>
+<div id="page-wrapper">
+  <header id="header" class="alt">
+    <%= link_to main_app.root_path do%>
+      <%= image_tag("logo.png", width: "185px") %>
+    <% end %>
+    <nav id="nav">
+      <ul>
+        <% if user_signed_in? %>
+          <li><%= link_to 'Home', main_app.root_path %></li>
+          <li>
+            <!--
+
+            -->
+          </li>
+        <%else%>
+          <li><%= link_to 'Registrati/Accedi', main_app.new_user_session_url, {class: 'button'}%></li>
+        <% end %>
+      </ul>
+    </nav>
+  </header>
+
+    <% if notice %>
+      <p class="alert alert-success"><%= notice %></p>
+    <% end %>
+    <% if alert %>
+      <p class="alert alert-danger"><%= alert %></p>
+    <% end %>
+
+      <%= yield %>
+</div>
+</body>
+</html>

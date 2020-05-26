@@ -145,10 +145,10 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 		box-sizing: inherit;
 	}
 
-	body {
-        background-image: url(images/sfondo2.jpg);
+	/*body {
+        background-image: url(images/sfondo.png);
         background-size: cover;
-    }
+    }*/
 
 	body, input, select, textarea {
 		color: #777;
@@ -3254,6 +3254,7 @@ input[type="button"].special:active,
 /* Banner */
 
 	#banner {
+        background-image: url(images/sfondo.png);
 		background-attachment: scroll,							fixed;
 		background-color: #666;
 		background-position: top left,						center center;
