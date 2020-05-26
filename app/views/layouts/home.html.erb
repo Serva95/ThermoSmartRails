@@ -37,21 +37,15 @@
       </ul>
     </nav>
   </header>
-  <section id="main" class="container">
-    <div class="row">
-      <div class="col-12">
-        <section class="box">
-          <% if notice %>
-            <h2 class="error"><%= notice %></h2>
-          <% end %>
-          <% if alert %>
-            <h2 class="error"><%= alert %></h2>
-          <% end %>
-          <%= yield %>
-        </section>
-      </div>
-    </div>
-  </section>
+
+  <% if notice %>
+    <p class="alert alert-success"><%= notice %></p>
+  <% end %>
+  <% if alert %>
+    <p class="alert alert-danger"><%= alert %></p>
+  <% end %>
+
+  <%= yield %>
 </div>
 </body>
 </html>

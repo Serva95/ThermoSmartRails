@@ -1,6 +1,14 @@
 @import url("fontawesome-all.min.css");
 @import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,300italic,400italic");
 
+/*per home page*/
+.home_page {
+    margin: -14em auto;
+    max-width: calc(100% - 5em);
+    width: 60em;
+}
+/*fine*/
+
 /*per la chat*/
 .message-content {
     padding: 5px;
@@ -3255,11 +3263,11 @@ input[type="button"].special:active,
 
 	#banner {
         background-image: url(images/sfondo.png);
-		background-attachment: scroll,							fixed;
+		background-attachment: scroll, fixed;
 		background-color: #666;
-		background-position: top left,						center center;
-		background-repeat: repeat,							no-repeat;
-		background-size: auto,							cover;
+		background-position: center, center center;
+		background-repeat: repeat, no-repeat;
+		background-size: cover, cover;
 		color: #fff;
 		padding: 12em 0 20em 0;
 		text-align: center;
@@ -3471,9 +3479,9 @@ input[type="button"].special:active,
 
 		/* Banner */
 
-			#banner {
+			/*#banner {
 				padding: 10em 0 18em 0;
-			}
+			}*/
 
 	}
 
