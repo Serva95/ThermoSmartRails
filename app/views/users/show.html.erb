@@ -1,0 +1,36 @@
+<!--Pagina profilo utente-->
+<div class="row gtr-uniform">
+  <h4 class="col-4 col-12-narrower">
+    <strong>Username:</strong>
+    <%#= @user.username %>
+  </h4>
+  <!-- Dati che visualizzo solo se sono il proprietario del profilo -->
+  <%if current_user.id == @user.id %>
+    <h4 class="col-4 col-12-narrower">
+      <strong>Email:</strong>
+      <%= @user.email %>
+    </h4>
+
+  <%end %>
+  <hr class="col-12 col-12-mobilep">
+
+</div>
+<hr class="col-12 col-12-mobilep">
+<!-- Visualizzazione profilo di un altro utente -->
+<%if @user.id == current_user.id %>
+  <div class="col-7 col-0-mobilep"></div>
+  <div class="col-2 col-12-mobilep">
+    <%= link_to 'Edit', edit_user_registration_path , class:'button'%>
+  </div>
+  <div class="col-3 col-12-mobilep">
+    <%= link_to 'Back', :back, class:'button special' %>
+  </div>
+<%else %>
+  <div class="col-7 col-0-mobilep"></div>
+  <div class="col-2 col-0-mobilep"></div>
+  <div class="col-3 col-12-mobilep">
+    <%= link_to 'Back', root_path, class:'button special' %>
+  </div>
+<%end %>
+
+

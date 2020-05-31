@@ -27,9 +27,15 @@
         <% if user_signed_in? %>
           <li><%= link_to 'Home', main_app.root_path %></li>
           <li>
-            <!--
-
-            -->
+            <a href="#" class="icon fa-angle-down">Benvenuto <%=current_user.email%>!</a>
+            <ul>
+              <li><%= link_to 'Il tuo profilo', user_path(current_user.id)%></li>
+              <!--<li><a href="Connector?ca=HomeManagement.gettempview">Vedi dati Temperatura</a></li>
+              <li><a href="Connector?ca=TermoManagement.view">Pagina Termostato</a></li>
+              <li><a href="Connector?ca=UtenteManagement.profileView">Profilo</a></li>
+              <li><a href="Connector?ca=SensorManagement.view">Vedi Sensori - tmp</a></li>-->
+              <li><%= link_to 'Esci', '/user/sign_out'%></li>
+            </ul>
           </li>
         <%else%>
           <li><%= link_to 'Registrati/Accedi', main_app.new_user_session_url, {class: 'button'}%></li>
@@ -47,5 +53,13 @@
 
   <%= yield %>
 </div>
+
+<%= javascript_include_tag 'jquery.dropotron.min.js' %>
+<%= javascript_include_tag 'jquery.scrollex.min.js' %>
+<%= javascript_include_tag 'browser.min.js' %>
+<%= javascript_include_tag 'breakpoints.min.js' %>
+<%= javascript_include_tag 'util.js' %>
+<%= javascript_include_tag 'main.js' %>
+
 </body>
 </html>
