@@ -27,7 +27,7 @@
         <% if user_signed_in? %>
           <li><%= link_to 'Home', main_app.root_path %></li>
           <li>
-            <a href="#" class="icon fa-angle-down">Benvenuto <%=current_user.email%>!</a>
+            <a href="#" class="icon solid fa-angle-down">Benvenuto <%=current_user.email%>!</a>
             <ul>
               <li><%= link_to 'Il tuo profilo', user_path(current_user.id)%></li>
               <!--<li><a href="Connector?ca=HomeManagement.gettempview">Vedi dati Temperatura</a></li>
