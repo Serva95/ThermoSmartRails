@@ -1,12 +1,17 @@
 
 <h2>Registrati</h2>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: {class: "row"}) do |f| %>
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: {class: "row gtr-uniform"}) do |f| %>
   <%= render "devise/shared/error_messages", resource: resource %>
 
   <div class="col-6 col-12-mobile">
     <%= f.label "il tuo indirizzo email" %>
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "email" %>
+  </div>
+
+  <div class="col-6 col-12-mobile">
+    <%= f.label :username, "Il tuo username (verrai chiamato con questo in tutta l'applicazione):" %>
+    <%= f.text_field :username, autofocus: true, autocomplete: false, placeholder: "username", required: true %>
   </div>
 
   <div class="col-6 col-12-mobile">
@@ -18,10 +23,9 @@
     <% end %>
   </div>
 
-  <div class="col-12 col-12-mobile"><br></div>
   <div class="col-6 col-12-mobile">
     <%= f.label "Ripeti la passowrd" %>
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+    <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "ripeti la password" %>
   </div>
 
   <div class="col-12 col-12-mobile"><br></div>

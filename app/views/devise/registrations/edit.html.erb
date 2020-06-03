@@ -1,43 +1,57 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
-
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
-
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+<div class="row gtr-uniform">
+  <div class="col-4 col-4-mobile">
+    <%= link_to "Annulla", root_path, class: "button icon solid fa-chevron-left" %>
+  </div>
+  <div class="col-8 col-8-mobile">
+    <h2>Modifica il tuo profilo</h2>
   </div>
 
-  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
-  <% end %>
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put , class: "row gtr-uniform"}) do |f| %>
+    <%= render "devise/shared/error_messages", resource: resource %>
 
-  <div class="field">
-    <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-    <% if @minimum_password_length %>
-      <br />
-      <em><%= @minimum_password_length %> characters minimum</em>
+    <div class="col-12 col-12-mobile">
+      <%= f.label :email, "La tua mail:" %>
+      <%= f.email_field :email, autocomplete: "email", placeholder: "email", required: true %>
+    </div>
+
+    <div class="col-12 col-12-mobile">
+      <%= f.label :username, "Il tuo username (verrai chiamato con questo in tutta l'applicazione):" %>
+      <%= f.text_field :username, autofocus: true, autocomplete: false, placeholder: "username", required: true %>
+    </div>
+
+    <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+      <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
     <% end %>
+
+    <div class="col-12 col-12-mobile">
+      <%= f.label :password, "Password" %> <i>(scrivi in questo campo <b>SOLO</b> se la vuoi cambiare):</i>
+      <%= f.password_field :password, autocomplete: "new-password", placeholder: "nuova password" %>
+      <% if @minimum_password_length %>
+        <em>La password deve essere minimo di <%= @minimum_password_length %> caratteri</em>
+      <% end %>
+    </div>
+
+    <div class="col-12 col-12-mobile">
+      <%= f.label :password_confirmation, "Ripeti la password (solo se la stai cambiando):" %>
+      <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "ripeti la nuova password" %>
+    </div>
+
+    <div class="col-12 col-12-mobile">
+      <%= f.label :current_password %> <i>(serve la tua password corrente per salvare le modifiche)</i>
+      <%= f.password_field :current_password, autocomplete: "current-password", placeholder: "la tua password attuale" %>
+    </div>
+
+    <div class="col-12 col-12-mobile">
+      <%= f.submit "Salva" %>
+    </div>
+  <% end %>
+  <div class="col-12 col-12-mobile"><hr></div>
+  <div class="col-12 col-12-mobile">
+    <h3>Elimina il mio account (attenzione questa azione è <b>IRREVERSIBILE</b>)</h3>
   </div>
 
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+  <div class="col-12 col-12-mobile">
+    <p><%= button_to "Elimina il mio account", registration_path(resource_name), data: { confirm: "Sei sicuro?" }, method: :delete, class: "special" %></p>
   </div>
 
-  <div class="field">
-    <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
-    <%= f.password_field :current_password, autocomplete: "current-password" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Update" %>
-  </div>
-<% end %>
-
-<h3>Cancel my account</h3>
-
-<p>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p>
-
-<%= link_to "Back", :back %>
+</div>

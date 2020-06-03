@@ -27,13 +27,20 @@
         <% if user_signed_in? %>
           <li><%= link_to 'Home', main_app.root_path %></li>
           <li>
-            <a href="#" class="icon solid fa-angle-down">Benvenuto <%=current_user.email%>!</a>
+            <% if user_signed_in? && current_user.username.nil?%>
+              <a href="#" class="icon solid fa-angle-down">Benvenuto <%=current_user.email%>!</a>
+            <%else %>
+              <a href="#" class="icon solid fa-angle-down">Benvenuto <%=current_user.username %></a>
+            <%end %>
             <ul>
-              <li><%= link_to 'Il tuo profilo', user_path(current_user.id)%></li>
-              <!--<li><a href="Connector?ca=HomeManagement.gettempview">Vedi dati Temperatura</a></li>
-              <li><a href="Connector?ca=TermoManagement.view">Pagina Termostato</a></li>
-              <li><a href="Connector?ca=UtenteManagement.profileView">Profilo</a></li>
-              <li><a href="Connector?ca=SensorManagement.view">Vedi Sensori - tmp</a></li>-->
+              <% if user_signed_in? && current_user.username.nil?%>
+                <li><%= link_to 'Completa il tuo profilo', edit_user_registration_path%></li>
+              <%else %>
+                <li><%= link_to 'Il tuo profilo', user_path(current_user.id)%></li>
+                <li><%= link_to "I tuoi sensori", sensors_path %></li>
+                <li><%= link_to "Le tue temperature", temps_path %></li>
+                <li><%= link_to "Le tue stanze", rooms_path %></li>
+              <%end %>
               <li><%= link_to 'Esci', '/user/sign_out'%></li>
             </ul>
           </li>

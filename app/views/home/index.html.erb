@@ -1,16 +1,16 @@
 <section id="banner">
   <h2 style="font-size: 5.5em;">Thermo Pi</h2>
   <h2>Home of your Smart Thermo Pi</h2>
-  <h3 style="font-weight: bold; text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;"><%#if(loggedOn){out.print("Benvenuto "+loggedUser.getUsername());}else{out.print("Login to see more details");} %></h3>
-
 </section>
 
 <!-- Main -->
 <section class="home_page">
-
   <section class="box special">
     <header class="major">
       <h2>This is you smart Thermo Pi administration panel</h2>
+      <% if user_signed_in? && !current_user.username.nil?%>
+        <h2>Benvenuto <%=current_user.username %></h2>
+      <%end %>
       <p>Here you can manage whatever you need remotely in your thermo pi</p>
     </header>
   </section>
