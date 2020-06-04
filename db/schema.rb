@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_01_221250) do
+ActiveRecord::Schema.define(version: 2020_06_04_224028) do
 
   create_table "orari_on_off", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.integer "room_id", null: false
@@ -30,11 +30,9 @@ ActiveRecord::Schema.define(version: 2020_06_01_221250) do
     t.index ["sensor_id"], name: "index_rooms_on_sensor_id"
   end
 
-  create_table "sensors", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "sensors", id: :string, limit: 64, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "nome", limit: 64, null: false
     t.string "location", limit: 64, null: false
-    t.string "unique_id", limit: 64
-    t.index ["unique_id"], name: "index_unique_id", unique: true
   end
 
   create_table "temps", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
@@ -54,6 +52,7 @@ ActiveRecord::Schema.define(version: 2020_06_01_221250) do
     t.datetime "remember_created_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "username", limit: 64
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

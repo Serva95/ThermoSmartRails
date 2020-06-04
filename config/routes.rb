@@ -9,9 +9,9 @@ Rails.application.routes.draw do
   end
 
   resources :users, only: [:show]
-  resources :rooms, only: [:index, :show]
+  resources :rooms, only: [:index, :show, :new]
   resources :temps, only: [:index, :show]
-  resources :sensors, only: [:index, :show]
+  resources :sensors, only: [:index, :new, :edit, :create, :update, :destroy]
 
   get "/404", :to => "errors#not_found"
   get "/442", :to => "errors#record_not_found"
