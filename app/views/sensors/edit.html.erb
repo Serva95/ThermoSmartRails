@@ -3,10 +3,10 @@
     <%= link_to 'Back', sensors_path, class: "button icon solid fa-chevron-left"%>
   </div>
   <div class="col-9 col-8-mobile">
-    <h2>Inserisci un nuovo sensore</h2>
+    <h2>Modifica il sensore: "<%= @sensor.nome %>"</h2>
   </div>
 
   <hr class="col-12 col-12-mobile">
 
-  <%= render 'form', sensor: @sensor %>
+  <%= render 'form_edit', sensor: @sensor %>
 </div>

@@ -2,17 +2,35 @@
   <div class="col-2 col-4-mobilep ">
     <%= link_to 'Back', root_path, class: "button icon solid fa-chevron-left"%>
   </div>
-  <div class="col-10 col-8-mobilep">
-    <h2>I tuoi sensori</h2>
+  <div class="col-5 col-8-mobilep">
+    <h2><b>I tuoi sensori</b></h2>
   </div>
-  <div class="col-12 col-12-mobilep">
-    <br>
-  </div>
-  <div class="col-12 col-12-mobilep">
-    <%= link_to "Aggiungi un sensore", new_sensor_path, {class: 'button'} %>
+  <div class="col-5 col-12-mobilep">
+    <%= link_to "Aggiungi un nuovo sensore", new_sensor_path, {class: 'button'} %>
   </div>
 
   <% if @sensors.present? %>
+    <div class="col-12 col-12-mobilep">
+      <hr>
+    </div>
+    <% @sensors.each do |sensor| %>
+      <div class="col-12 col-12-mobilep">
+        ID sensore: <h3><%= sensor.id %></h3>
+      </div>
+      <div class="col-4 col-4-mobilep">
+        Nome: <h3><%= sensor.nome %></h3>
+      </div>
+      <div class="col-4 col-4-mobilep">
+        Posizione: <h3><%= sensor.location %></h3>
+      </div>
+      <div class="col-2 col-2-mobilep">
+        <%= link_to '', edit_sensor_path(sensor) , class: 'far fa-edit fa-3x', title: 'Modifica questo sensore'%>
+      </div>
+      <div class="col-2 col-2-mobilep">
+        <%= link_to '', sensor_path(sensor), method: :delete, data: { confirm: 'Sicuro di voler eliminare questo sensore? Verranno eliminate anche tutte le temperature da lui registrate' }, class: 'far fa-trash-alt fa-3x', title: 'Elimina questo sensore'%>
+      </div>
+      <div class="col-12 col-12-mobilep"><hr></div>
+    <% end %>
 
   <%else %>
     <div class="col-12 col-12-mobilep">

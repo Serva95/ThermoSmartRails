@@ -10,10 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_04_224028) do
+ActiveRecord::Schema.define(version: 2020_06_07_224610) do
 
-  create_table "orari_on_off", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
-    t.integer "room_id", null: false
+  create_table "orari_on_offs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.bigint "room_id", null: false
     t.integer "giorno", limit: 2, null: false
     t.integer "fascia", limit: 2, null: false
     t.time "orario_accensione", null: false
@@ -26,7 +26,7 @@ ActiveRecord::Schema.define(version: 2020_06_04_224028) do
     t.decimal "max_temp", precision: 3, scale: 1, null: false
     t.decimal "min_temp", precision: 3, scale: 1, null: false
     t.decimal "absolute_min", precision: 3, scale: 1, null: false
-    t.integer "sensor_id"
+    t.string "sensor_id", limit: 64
     t.index ["sensor_id"], name: "index_rooms_on_sensor_id"
   end
 
@@ -39,7 +39,7 @@ ActiveRecord::Schema.define(version: 2020_06_04_224028) do
     t.decimal "temp", precision: 3, scale: 1, null: false
     t.decimal "hum", precision: 3, scale: 1, null: false
     t.datetime "date", null: false
-    t.integer "sensor_id"
+    t.string "sensor_id", limit: 64
     t.index ["date"], name: "index_date"
     t.index ["sensor_id"], name: "index_temps_on_sensor_id"
   end
@@ -57,4 +57,7 @@ ActiveRecord::Schema.define(version: 2020_06_04_224028) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "orari_on_offs", "rooms"
+  add_foreign_key "rooms", "sensors"
+  add_foreign_key "temps", "sensors"
 end
