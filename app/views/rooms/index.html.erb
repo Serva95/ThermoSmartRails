@@ -1,18 +1,33 @@
 <div class="row gtr-uniform">
-  <div class="col-3 col-4-mobilep ">
+  <div class="col-2 col-4-mobile ">
     <%= link_to 'Back', root_path, class: "button icon solid fa-chevron-left"%>
   </div>
-  <div class="col-9 col-8-mobilep">
+  <div class="col-5 col-8-mobile">
     <h2>Le tue stanze</h2>
   </div>
-  <div class="col-12 col-12-mobilep">
-    <br>
+  <div class="col-5 col-12-mobilep">
+    <%= link_to "Aggiungi una nuova stanza", new_room_path, {class: 'button'} %>
   </div>
 
-  <% if @roomss.present? %>
+  <% if @rooms.present? %>
+    <div class="col-12 col-12-mobile">
+      <hr>
+    </div>
+    <% @rooms.each do |room| %>
+      <div class="col-4 col-4-mobile">
+        Nome della stanza: <h3><%= link_to room.nome, room_path(room), title: 'Vedi i dettagli di questa stanza' %></h3>
+      </div>
+      <div class="col-2 col-2-mobile">
+        <%= link_to '', edit_room_path(room) , class: 'far fa-edit fa-3x', title: 'Modifica questa stanza'%>
+      </div>
+      <div class="col-2 col-2-mobile">
+        <%= link_to '', room_path(room), method: :delete, data: { confirm: 'Sicuro di voler eliminare questo stanza? Verranno eliminate anche tutte impostazioni associate' }, class: 'far fa-trash-alt fa-3x', title: 'Elimina questa stanza'%>
+      </div>
+      <div class="col-12 col-12-mobile"><hr></div>
+    <% end %>
 
   <%else %>
-    <div class="col-12 col-12-mobilep">
+    <div class="col-12 col-12-mobile">
       <h3>Non c'&egrave; alcuna stanza, inizia creandone una</h3>
     </div>
   <% end %>

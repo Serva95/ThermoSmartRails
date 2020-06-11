@@ -14,11 +14,41 @@ class RoomsController < ApplicationController
   # GET /rooms/new
   def new
     @room = Room.new
+    @days = %w[Lunedì Martedì Mercoledì Giovedì Venerdì Sabato Domenica]
   end
 
   # POST /rooms
   def create
-    @room = Room.new(sensor_params)
+    @room = Room.new(room_params)
+    actual = 0
+    previous_value = 0
+    params.each do |key, value|
+      if !value.empty? && key[0..3] == "time"
+        case key[-1, 1].to_i
+        when 0
+          if previous_value == 0
+            previous_value = value
+          else
+
+          end
+          puts "zero #{key} => #{value}"
+        when 1
+          puts "uno #{key} => #{value}"
+        when 2
+          puts "2 #{key} => #{value}"
+        when 3
+          puts "3 #{key} => #{value}"
+        when 4
+          puts "4 #{key} => #{value}"
+        when 5
+          puts "5 #{key} => #{value}"
+        when 6
+          puts "6 #{key} => #{value}"
+        else
+        end
+      end
+    end
+    byebug
     respond_to do |format|
       if @room.save
         format.html { redirect_to rooms_path , notice: 'Stanza creata' }
@@ -50,8 +80,8 @@ class RoomsController < ApplicationController
   # PATCH/PUT /rooms/:id
   def update
     respond_to do |format|
-      if @room.update(sensor_params)
-        format.html { redirect_to rooms_path, notice: 'Sensore modificato con successo' }
+      if @room.update(room_params)
+        format.html { redirect_to rooms_path, notice: 'Stanza modificata con successo' }
         format.json { render :index, status: :ok, location: @room }
       else
         format.html { render :edit }
@@ -63,7 +93,7 @@ class RoomsController < ApplicationController
   private
 
   def room_params
-    params.require(:room).permit(:id, :nome, :max_temp, :min_temp, :absolute_min, :sensor_id)
+    params.require(:room).permit(:nome, :max_temp, :min_temp, :absolute_min)
   end
 
   def set_room

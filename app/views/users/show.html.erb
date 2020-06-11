@@ -6,13 +6,16 @@
   <div class="col-9 col-8-mobile">
     <h2>Il tuo profilo</h2>
   </div>
-  <h4 class="col-4 col-12-mobile">
+  <h4 class="col-6 col-12-mobile">
     <strong>Username:</strong> <%= @user.username %>
   </h4>
   <!-- Dati che visualizzo solo se sono il proprietario del profilo -->
   <%if current_user.id == @user.id %>
-    <h4 class="col-4 col-12-mobile">
+    <h4 class="col-6 col-12-mobile">
       <strong>Email:</strong> <%= @user.email %>
+    </h4>
+    <h4 class="col-12 col-12-mobile">
+      <strong>Remember creato il:</strong> <%= @user.remember_created_at.strftime("%d-%m-%Y alle %H:%M:%S") %> <strong>valido fino al:</strong> <%= (@user.remember_created_at + 3.weeks).strftime("%d-%m-%Y alle %H:%M:%S") %>
     </h4>
   <%end %>
 </div>

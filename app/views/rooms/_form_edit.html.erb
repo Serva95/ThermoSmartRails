@@ -1,0 +1,35 @@
+<%= form_for @sensor, url: sensor_path, html: {class: "row gtr-uniform"} do |form| %>
+  <%unless @sensor.nil?
+      if @sensor.errors.any? %>
+      <div id="error_explanation" class="col-12 col-12-mobilep">
+        <h2><%= pluralize(@sensor.errors.count, "error") %> Errore nel salvataggio del sensore:</h2>
+        <ul>
+          <% @sensor.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end
+       end%>
+
+  <div class="col-6 col-12-mobile">
+    <%= form.label :nome, "Nome del sensore"%>
+    <%= form.text_field :nome, placeholder: "Nome del sensore", required: true %>
+  </div>
+
+  <div class="col-6 col-12-mobile">
+    <%= form.label :location, "Posizione del sensore"%>
+    <%= form.text_field :location, placeholder: "Posizione del sensore", required: true %>
+  </div>
+
+  <div class="col-6 col-12-mobile">
+    <%= form.label :id, "ID del sensore"%>
+    <%= form.text_field :id, placeholder: "ID del sensore", required: true, minlength: 32, maxlength: 32 %>
+  </div>
+
+  <div class="col-12 col-12-mobile"><br></div>
+
+  <div class="col-12 col-12-mobile">
+    <%= form.submit "Salva le modifiche", :name => "edit" %>
+  </div>
+<% end %>

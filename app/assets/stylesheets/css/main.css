@@ -2022,7 +2022,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 	.container {
 		margin: 0 auto;
 		max-width: calc(100% - 5em);
-		width: 65em;
+		width: 70em;
 	}
 
 		.container.xsmall {
