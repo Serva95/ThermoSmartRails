@@ -9,7 +9,9 @@ Rails.application.routes.draw do
   end
 
   resources :users, only: [:show]
-  resources :rooms, only: [:index, :new, :edit, :create, :update, :destroy, :show]
+  resources :rooms, only: [:index, :new, :edit, :create, :update, :destroy, :show] do
+    resources :orari_on_offs, only: [:index, :new, :create, :edit, :update]
+  end
   resources :temps, only: [:index, :show]
   resources :sensors, only: [:index, :new, :edit, :create, :update, :destroy]
 

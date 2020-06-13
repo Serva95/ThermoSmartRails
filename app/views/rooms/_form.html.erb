@@ -12,8 +12,6 @@
     <% end
        end%>
 
-
-
   <div class="col-6 col-12-mobile">
     <%= form.label :nome, "Nome della stanza"%>
     <%= form.text_field :nome, placeholder: "Nome della stanza", required: true %>
@@ -70,54 +68,6 @@
   <div class="col-12 col-12-mobile">
     <hr>
   </div>
-  <div class="col-12 col-12-mobile">
-    <h3><b>Orari di accensione/spegnimento</b></h3>
-    <h3>Ricorda che l'orario di spegnimento deve essere successivo a quello di accensione
-      <br>Ricorda inoltre che l'orario di spegnimento della fascia 1 deve essere antecedente a quello di accensione della fascia 2 e cos&igrave; via, altrimenti verrano scartati i dati non corretti</h3>
-    <h4><i>Solo la prima fascia &egrave; obbligatoria, le altre, se lasciate vuote, verranno ignorate. Ricorda: se lasci vuota la fascia 2, la fascia 3 non verr&agrave; letta.</i></h4>
-  </div>
-
-  <% 0.upto(6) do |i|%>
-    <div class="<%if i!=0 %>col-6 col-6-mobile<% else %>col-12 col-12-mobile<% end %>">
-      <%if i!=6%>
-        <h3>Fascie del <%= @days[i]%></h3>
-      <%else%>
-        <h3>Fascie della <%= @days[i]%></h3>
-      <%end%>
-    </div>
-    <%if i!=0 %>
-      <div class="col-6 col-6-mobile">
-        <a class="button" id="copia" onclick="copia(<%=i%>)">Copia dal luned&igrave;</a>
-      </div>
-    <%end%>
-    <div class="col-6 col-12-mobile">
-      <h4>Orario Accensione Fascia 1</h4>
-      <input type="time" name="timeonuno<%=i%>" id="timeOnUno<%=i%>" min="00:00" max="23:59" required value="00:00"/>
-    </div>
-    <div class="col-6 col-12-mobile">
-      <h4>Orario Spegnimento Fascia 1</h4>
-      <input type="time" name="timeoffuno<%=i%>" id="timeOffUno<%=i%>" min="00:00" max="23:59" required value="00:00"/>
-    </div>
-    <div class="col-6 col-12-mobile">
-      <h4>Orario Accensione Fascia 2</h4>
-      <input type="time" name="timeondue<%=i%>" id="timeOnDue<%=i%>" min="00:00" max="23:59"/>
-    </div>
-    <div class="col-6 col-12-mobile">
-      <h4>Orario Spegnimento Fascia 2</h4>
-      <input type="time" name="timeoffdue<%=i%>" id="timeOffDue<%=i%>" min="00:00" max="23:59"/>
-    </div>
-    <div class="col-6 col-12-mobile">
-      <h4>Orario Accensione Fascia 3</h4>
-      <input type="time" name="timeontre<%=i%>" id="timeOnTre<%=i%>" min="00:00" max="23:59"/>
-    </div>
-    <div class="col-6 col-12-mobile">
-      <h4>Orario Spegnimento Fascia 3</h4>
-      <input type="time" name="timeofftre<%=i%>" id="timeOffTre<%=i%>" min="00:00" max="23:59"/>
-    </div>
-    <div class="col-12 col-12-mobile">
-      <hr>
-    </div>
-  <% end %>
 
   <div class="col-12 col-12-mobile"><br></div>
 
@@ -152,13 +102,5 @@
           }else{
               $("#confermaTemp").text("Completa tutti i campi prima di premere questo bottone");
           }
-      }
-      function copia(sectionID) {
-          $("#timeOnUno"+sectionID).val($("#timeOnUno0").val())
-          $("#timeOffUno"+sectionID).val($("#timeOffUno0").val())
-          $("#timeOnDue"+sectionID).val($("#timeOnDue0").val())
-          $("#timeOffDue"+sectionID).val($("#timeOffDue0").val())
-          $("#timeOnTre"+sectionID).val($("#timeOnTre0").val())
-          $("#timeOffTre"+sectionID).val($("#timeOffTre0").val())
       }
   </script>

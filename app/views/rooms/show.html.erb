@@ -1,36 +1,38 @@
 <!--Pagina profilo utente-->
 <div class="row gtr-uniform">
-  <h4 class="col-4 col-12-narrower">
-    <strong>Username:</strong>
-    <%#= @user.username %>
-  </h4>
-  <!-- Dati che visualizzo solo se sono il proprietario del profilo -->
-  <%if current_user.id == @room.id %>
-    <h4 class="col-4 col-12-narrower">
-      <strong>Email:</strong>
-      <%= @room.email %>
-    </h4>
+  <div class="col-2 col-4-mobile ">
+    <%= link_to 'Back', rooms_path, class: "button icon solid fa-chevron-left"%>
+  </div>
+  <div class="col-9 col-8-mobile">
+    <h2>Dettagli della stanza: <%= @room.nome %></h2>
+  </div>
 
-  <%end %>
+  <h4 class="col-12 col-12-narrower">
+    <strong>Nome della stanza:</strong> <%= @room.nome %>
+  </h4>
+  <h4 class="col-12 col-12-narrower">
+    <strong>Temperatura massima della stanza:</strong><%= @room.max_temp %>
+  </h4>
+  <h4 class="col-12 col-12-narrower">
+    <strong>Temperatura minima della stanza:</strong><%= @room.min_temp %>
+  </h4>
+  <h4 class="col-12 col-12-narrower">
+    <strong>Temperatura minima assoluta della stanza:</strong><%= @room.absolute_min %>
+  </h4>
   <hr class="col-12 col-12-mobilep">
+  <h4 class="col-12 col-12-narrower">
+    <%= link_to "Vedi gli orari di accensione e spegnimento del sistema associati alla stanza", room_orari_on_offs_path(@room), {class: 'button'} %>
+  </h4>
+  <%if @room.sensor_id.nil? %>
+    <h4 class="col-12 col-12-narrower">
+      Ancora non è stato associato nessun sensore a questa stanza, clicca sul bottone per associarne uno
+    </h4>
+  <%else %>
+    <h4 class="col-12 col-12-narrower">
+      Sensore associato questa stanza: ... TO DO !!!!!!
+    </h4>
+  <% end%>
 
 </div>
-<hr class="col-12 col-12-mobilep">
-<!-- Visualizzazione profilo di un altro utente -->
-<%if @room.id == current_user.id %>
-  <div class="col-7 col-0-mobilep"></div>
-  <div class="col-2 col-12-mobilep">
-    <%= link_to 'Edit', edit_user_registration_path , class:'button'%>
-  </div>
-  <div class="col-3 col-12-mobilep">
-    <%= link_to 'Back', :back, class:'button special' %>
-  </div>
-<%else %>
-  <div class="col-7 col-0-mobilep"></div>
-  <div class="col-2 col-0-mobilep"></div>
-  <div class="col-3 col-12-mobilep">
-    <%= link_to 'Back', root_path, class:'button special' %>
-  </div>
-<%end %>
 
 
