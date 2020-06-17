@@ -1,35 +1,15 @@
-<%= form_for @sensor, url: sensor_path, html: {class: "row gtr-uniform"} do |form| %>
-  <%unless @sensor.nil?
-      if @sensor.errors.any? %>
-      <div id="error_explanation" class="col-12 col-12-mobilep">
-        <h2><%= pluralize(@sensor.errors.count, "error") %> Errore nel salvataggio del sensore:</h2>
-        <ul>
-          <% @sensor.errors.full_messages.each do |message| %>
-            <li><%= message %></li>
-          <% end %>
-        </ul>
-      </div>
-    <% end
-       end%>
+<%= render 'form_edit_common', room: @room %>
 
-  <div class="col-6 col-12-mobile">
-    <%= form.label :nome, "Nome del sensore"%>
-    <%= form.text_field :nome, placeholder: "Nome del sensore", required: true %>
-  </div>
-
-  <div class="col-6 col-12-mobile">
-    <%= form.label :location, "Posizione del sensore"%>
-    <%= form.text_field :location, placeholder: "Posizione del sensore", required: true %>
-  </div>
-
-  <div class="col-6 col-12-mobile">
-    <%= form.label :id, "ID del sensore"%>
-    <%= form.text_field :id, placeholder: "ID del sensore", required: true, minlength: 32, maxlength: 32 %>
-  </div>
-
-  <div class="col-12 col-12-mobile"><br></div>
-
-  <div class="col-12 col-12-mobile">
-    <%= form.submit "Salva le modifiche", :name => "edit" %>
-  </div>
-<% end %>
+<script type="application/javascript">
+    $(function() {
+        let max = $("#room_max_temp").val();
+        let min = $("#room_min_temp").val();
+        let absmin = $("#room_absolute_min").val();
+        $("#tempMaxConfirm").text(max+"\xB0C");
+        $("#tempMinConfirm").text(min+"\xB0C");
+        $("#tempMinAbsConfirm").text(absmin+"\xB0C");
+        $("#tempMax").val(max);
+        $("#tempMin").val(min);
+        $("#tempMinAbs").val(absmin);
+    });
+</script>
