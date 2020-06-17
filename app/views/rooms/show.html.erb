@@ -7,30 +7,39 @@
     <h2>Dettagli della stanza: <%= @room.nome %></h2>
   </div>
 
-  <h4 class="col-12 col-12-narrower">
-    <strong>Nome della stanza:</strong> <%= @room.nome %>
-  </h4>
-  <h4 class="col-12 col-12-narrower">
-    <strong>Temperatura massima della stanza:</strong><%= @room.max_temp %>
-  </h4>
-  <h4 class="col-12 col-12-narrower">
-    <strong>Temperatura minima della stanza:</strong><%= @room.min_temp %>
-  </h4>
-  <h4 class="col-12 col-12-narrower">
-    <strong>Temperatura minima assoluta della stanza:</strong><%= @room.absolute_min %>
-  </h4>
+  <div class="col-12 col-12-narrower">
+    <h4><strong>Nome della stanza:</strong> <%= @room.nome %></h4>
+  </div>
+  <div class="col-12 col-12-narrower">
+    <h4><strong onmouseover="$('#hint1').show(450,'swing')" onmouseout="$('#hint1').hide(850,'swing')">Temperatura massima della stanza:</strong> <%= @room.max_temp %> &deg;C</h4>
+  </div>
+  <div class="col-12 col-12-narrower" id="hint1" hidden>
+    <h5>Temperatura Massima (Se la temperatura della stanza supera questo valore il riscaldamento della stessa si bloccher&agrave;)</h5>
+  </div>
+  <div class="col-12 col-12-narrower">
+    <h4><strong onmouseover="$('#hint2').show(450,'swing')" onmouseout="$('#hint2').hide(850,'swing')">Temperatura minima della stanza:</strong> <%= @room.min_temp %> &deg;C</h4>
+  </div>
+  <div class="col-12 col-12-narrower" id="hint2" hidden>
+    <h5>Temperatura Minima (Nei momenti in cui il riscaldamento &egrave; in modalit&agrave; programma, se la temperatura scender&agrave; sotto questo valore, verr&agrave; attivato il riscaldamento per riportarla a tale valore)</h5>
+  </div>
+  <div class="col-12 col-12-narrower">
+    <h4><strong onmouseover="$('#hint3').show(450,'swing')" onmouseout="$('#hint3').hide(850,'swing')">Temperatura minima assoluta della stanza:</strong> <%= @room.absolute_min %> &deg;C</h4>
+  </div>
+  <div class="col-12 col-12-narrower" id="hint3" hidden>
+    <h5>Temperatura Minima Assoluta (Temperatura sotto la quale il sistema &egrave; sempre attivo e riscalda anche se &egrave; impostato su spento. Questo avviene per evitare temperature troppo basse che potrebbero danneggiare le tubature.)</h5>
+  </div>
   <hr class="col-12 col-12-mobilep">
-  <h4 class="col-12 col-12-narrower">
+  <div class="col-12 col-12-narrower">
     <%= link_to "Vedi gli orari di accensione e spegnimento del sistema associati alla stanza", room_orari_on_offs_path(@room), {class: 'button'} %>
-  </h4>
+  </div>
   <%if @room.sensor_id.nil? %>
-    <h4 class="col-12 col-12-narrower">
-      Ancora non è stato associato nessun sensore a questa stanza, clicca sul bottone per associarne uno
-    </h4>
+    <div class="col-12 col-12-narrower">
+      <h4>Ancora non è stato associato nessun sensore a questa stanza, clicca sul bottone per associarne uno</h4>
+    </div>
   <%else %>
-    <h4 class="col-12 col-12-narrower">
-      Sensore associato questa stanza: ... TO DO !!!!!!
-    </h4>
+    <div class="col-12 col-12-narrower">
+      <h4>Sensore associato questa stanza: ... TO DO !!!!!!</h4>
+    </div>
   <% end%>
 
 </div>

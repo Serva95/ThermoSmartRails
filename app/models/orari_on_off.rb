@@ -20,7 +20,7 @@ class OrariOnOff < ApplicationRecord
             end
             chop = key.dup
             chop.chop!
-            if chop == "timeoffuno" || chop == "timeoffdue" ||chop == "timeofftre"
+            if chop == "timeoffuno" || chop == "timeoffdue" || chop == "timeofftre"
               giorno << previous_value
               giorno << value
             end
@@ -43,7 +43,7 @@ class OrariOnOff < ApplicationRecord
             end
             chop = key.dup
             chop.chop!
-            if chop == "timeoffuno" || chop == "timeoffdue" ||chop == "timeofftre"
+            if chop == "timeoffuno" || chop == "timeoffdue" || chop == "timeofftre"
               giorno << previous_value
               giorno << value
             end
@@ -66,7 +66,7 @@ class OrariOnOff < ApplicationRecord
             end
             chop = key.dup
             chop.chop!
-            if chop == "timeoffuno" || chop == "timeoffdue" ||chop == "timeofftre"
+            if chop == "timeoffuno" || chop == "timeoffdue" || chop == "timeofftre"
               giorno << previous_value
               giorno << value
             end
@@ -89,7 +89,7 @@ class OrariOnOff < ApplicationRecord
             end
             chop = key.dup
             chop.chop!
-            if chop == "timeoffuno" || chop == "timeoffdue" ||chop == "timeofftre"
+            if chop == "timeoffuno" || chop == "timeoffdue" || chop == "timeofftre"
               giorno << previous_value
               giorno << value
             end
@@ -112,7 +112,7 @@ class OrariOnOff < ApplicationRecord
             end
             chop = key.dup
             chop.chop!
-            if chop == "timeoffuno" || chop == "timeoffdue" ||chop == "timeofftre"
+            if chop == "timeoffuno" || chop == "timeoffdue" || chop == "timeofftre"
               giorno << previous_value
               giorno << value
             end
@@ -135,7 +135,7 @@ class OrariOnOff < ApplicationRecord
             end
             chop = key.dup
             chop.chop!
-            if chop == "timeoffuno" || chop == "timeoffdue" ||chop == "timeofftre"
+            if chop == "timeoffuno" || chop == "timeoffdue" || chop == "timeofftre"
               giorno << previous_value
               giorno << value
             end
@@ -158,7 +158,7 @@ class OrariOnOff < ApplicationRecord
             end
             chop = key.dup
             chop.chop!
-            if chop == "timeoffuno" || chop == "timeoffdue" ||chop == "timeofftre"
+            if chop == "timeoffuno" || chop == "timeoffdue" || chop == "timeofftre"
               giorno << previous_value
               giorno << value
             end
@@ -171,9 +171,29 @@ class OrariOnOff < ApplicationRecord
     unless orari.nil?
       orari << giorno
     end
-    puts "orari #{orari}"
     return orari
+  end
 
+  def self.save_all(orari, room_id)
+    fascia = 0
+    ActiveRecord::Base.transaction do
+      orari.each_with_index { |value, giorno|
+        value.each_slice(2) do |orari_fascia|
+          orari_to_db = OrariOnOff.new
+          orari_to_db.room_id = room_id
+          orari_to_db.giorno = giorno
+          orari_to_db.fascia = fascia
+          orari_to_db.orario_accensione = orari_fascia[0]
+          orari_to_db.orario_spegnimento = orari_fascia[1]
+          fascia += 1
+          orari_to_db.save
+        end
+        fascia = 0
+      }
+      after_commit do
+        return true
+      end
+    end
   end
 
 end

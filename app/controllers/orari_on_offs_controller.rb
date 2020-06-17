@@ -2,7 +2,8 @@ class OrariOnOffsController < ApplicationController
   before_action :set_orari, only: [:edit, :update]
 
   def index
-    @orari = OrariOnOff.all
+    @orari = OrariOnOff.where("room_id = ?", params[:room_id])
+    @days = %w[Lunedì Martedì Mercoledì Giovedì Venerdì Sabato Domenica]
   end
 
   def new
@@ -19,8 +20,8 @@ class OrariOnOffsController < ApplicationController
         format.json { render json: @orario.errors, status: :unprocessable_entity }
       else
         #ciclare il salvataggio in una transaction ActiveRecord::Base.transaction do
-        if @orario.save
-          format.html { redirect_to rooms_path , notice: 'Orari salvati' }
+        if OrariOnOff.save_all(@orario, params[:room_id])
+          format.html { redirect_to room_orari_on_offs_path(params[:room_id]) , notice: 'Orari salvati' }
           format.json { render :index, status: :created, location: @orario }
         end
       end
