@@ -11,9 +11,12 @@ Rails.application.routes.draw do
   resources :users, only: [:show]
   resources :rooms, only: [:index, :new, :edit, :create, :update, :destroy, :show] do
     resources :orari_on_offs, only: [:index, :new, :create, :edit, :update]
+    resources :temps, only: [:index]
   end
-  resources :temps, only: [:index, :show]
-  resources :sensors, only: [:index, :new, :edit, :create, :update, :destroy]
+  resources :temps, only: [:index]
+  resources :sensors, only: [:index, :new, :edit, :create, :update, :destroy] do
+    resources :temps, only: [:create]
+  end
 
 
   #development.rb config.consider_all_requests_local = false
