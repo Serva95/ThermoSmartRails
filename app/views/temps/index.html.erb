@@ -9,16 +9,36 @@
     <br>
   </div>
 
-  <% if @temps.present? %>
-
+  <% if @rooms.present? %>
+    <% @rooms.each do |room| %>
+      <div class="col-12 col-12-mobile">
+        <h3>Nome del sensore: <b><%= room.nome.upcase %></b></h3>
+      </div>
+      <%if room.sensor_id.nil? %>
+        <div class="col-8 col-12-mobile">
+          <h3>Associa un sensore a questa stanza per vederne le temperature</h3>
+        </div>
+        <div class="col-4 col-12-mobile">
+          <%= link_to "Associa il sensore", edit_room_path(room), {class: 'button'} %>
+        </div>
+      <%else %>
+        <div class="col-4 col-4-mobile">
+          ID sensore associato: <h3><%= room.sensor_id %></h3>
+        </div>
+        <div class="col-4 col-4-mobile">
+          <%= link_to "Guarda le temperature di questa stanza", room_temps_path(room), {class: 'button'} %>
+        </div>
+        <div class="col-12 col-12-mobile"><hr></div>
+      <%end %>
+    <% end %>
   <%else %>
     <div class="col-12 col-12-mobilep">
-      <h3>Non c'&egrave; alcuna temperatura, aggiungi prima un sensore poi torna in questa pagina</h3>
+      <h3>Non c'&egrave; alcuna temperatura, aggiungi prima una stanza, associale un sensore, poi torna in questa pagina</h3>
     </div>
   <% end %>
-  <script type="application/javascript">
+  <!--<script type="application/javascript">
       setTimeout(function(){
           window.location.reload(1);
       }, 2*60*1000); /* minuti * secondi * 1000 */
-  </script>
+  </script>-->
 </div>

@@ -8,19 +8,23 @@ class RoomsController < ApplicationController
 
   # GET /rooms/:id
   def show
-    @room = Room.find(params[:id])
+    @room = Room.join_sensor(params[:id])
   end
 
   # GET /rooms/new
   def new
     @room = Room.new
+    @sensors = Sensor.all
   end
 
   # POST /rooms
   def create
     @room = Room.new(room_params)
+    if @room.sensor_id.empty?
+      @room.sensor_id = nil
+    end
     respond_to do |format|
-      if @room.save
+      if @room.save!
         format.html { redirect_to rooms_path , notice: 'Stanza creata' }
         format.json { render :index, status: :created, location: @room }
       else
@@ -45,10 +49,14 @@ class RoomsController < ApplicationController
 
   #GET /rooms/:id/edit
   def edit
+    @sensors = Sensor.all
   end
 
   # PATCH/PUT /rooms/:id
   def update
+    if @room.sensor_id.empty?
+      @room.sensor_id = nil
+    end
     respond_to do |format|
       if @room.update(room_params)
         format.html { redirect_to rooms_path, notice: 'Stanza modificata con successo' }
@@ -63,7 +71,7 @@ class RoomsController < ApplicationController
   private
 
   def room_params
-    params.require(:room).permit(:nome, :max_temp, :min_temp, :absolute_min)
+    params.require(:room).permit(:nome, :max_temp, :min_temp, :absolute_min, :sensor_id)
   end
 
   def set_room

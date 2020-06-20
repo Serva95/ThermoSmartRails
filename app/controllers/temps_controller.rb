@@ -4,7 +4,7 @@ class TempsController < ApplicationController
 
   # GET /temps
   def index
-    @sensors = Temp.all
+    @rooms = Room.all
   end
 
   def show

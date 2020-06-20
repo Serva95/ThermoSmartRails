@@ -30,9 +30,7 @@
     <i class="fas fa-plus-circle fa-3x" onclick="increase('tempMax')"></i>
     <i class="fas fa-minus-circle fa-3x" onclick="decrease('tempMax')"></i>
   </div>
-  <div class="col-12 col-12-mobile">
-    <hr>
-  </div>
+  <div class="col-12 col-12-mobile"><hr></div>
   <div class="col-8 col-12-mobile">
     <h4>Temperatura Minima (Nei momenti in cui il riscaldamento &egrave; in modalit&agrave; programma, se la temperatura scender&agrave; sotto questo valore, verr&agrave; attivato il riscaldamento per riportarla a tale valore)  - Deve essere minore della temperatura massima, minore di 99&deg;C e maggiore di 10&deg;C</h4>
   </div>
@@ -44,9 +42,7 @@
     <i class="fas fa-plus-circle fa-3x" onclick="increase('tempMin')"></i>
     <i class="fas fa-minus-circle fa-3x" onclick="decrease('tempMin')"></i>
   </div>
-  <div class="col-12 col-12-mobile">
-    <hr>
-  </div>
+  <div class="col-12 col-12-mobile"><hr></div>
   <div class="col-8 col-12-mobile">
     <h4>Temperatura Minima Assoluta (Temperatura sotto la quale il sistema &egrave; sempre attivo e riscalda anche se &egrave; impostato su spento. Questo avviene per evitare temperature troppo basse che potrebbero danneggiare le tubature.) - Deve essere minore di 10&deg;C e maggiore di 0&deg;C</h4>
   </div>
@@ -58,34 +54,37 @@
     <i class="fas fa-plus-circle fa-3x" onclick="increase('tempMinAbs')"></i>
     <i class="fas fa-minus-circle fa-3x" onclick="decrease('tempMinAbs')"></i>
   </div>
-  <div class="col-12 col-12-mobile">
-    <hr>
-  </div>
+  <div class="col-12 col-12-mobile"><hr></div>
   <div class="col-3 col-12-mobile">
     <input type="button" onclick="isminimum()" value="Conferma Temperature"/>
     <b><div id="confermaTemp"></div></b>
   </div>
   <div class="col-3 col-12-mobile">
     Temperatura Massima: <span id="tempMaxConfirm"></span>
-
     <%= form.hidden_field :max_temp%>
   </div>
   <div class="col-3 col-12-mobile">
     Temperatura Minima: <span id="tempMinConfirm"></span>
-
     <%= form.hidden_field :min_temp%>
   </div>
   <div class="col-3 col-12-mobile">
     Temperatura Minima assoluta: <span id="tempMinAbsConfirm"></span>
-
     <%= form.hidden_field :absolute_min%>
   </div>
+  <div class="col-12 col-12-mobile"><hr></div>
   <div class="col-12 col-12-mobile">
-    <hr>
+    <h4>Associa un sensore a questa stanza</h4>
   </div>
-
+  <%if @sensors.present? %>
+    <div class="col-6 col-12-mobile">
+      <%= form.collection_select(:sensor_id, @sensors, :id, :nome, { include_blank: true })%>
+    </div>
+  <%else %>
+    <div class="col-12 col-12-mobile">
+      <h4>Non esiste ancora nessun sensore, creane prima almeno uno poi torna qua per associarlo alla stanza, oppure salva la stanza ora e associa il sensore in un secondo momento.</h4>
+    </div>
+  <%end %>
   <div class="col-12 col-12-mobile"><br></div>
-
   <div class="col-12 col-12-mobile">
     <h4>Ricorda di confermare sempre le temperature ogni volta che le modifichi, altrimenti i cambiamenti non verranno salvati</h4>
     <%= form.submit "Conferma le temperature con il bottone sopra", id: "inviadati", disabled: true %>

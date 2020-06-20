@@ -14,7 +14,7 @@ end
 
 class Sensor < ApplicationRecord
   has_many :temps, dependent: :destroy
-  has_one :room
+  has_one :room, dependent: :nullify
   validates_with SensorValidator
 
   validates :id, presence: true, uniqueness: true
