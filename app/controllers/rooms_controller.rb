@@ -49,16 +49,22 @@ class RoomsController < ApplicationController
 
   #GET /rooms/:id/edit
   def edit
-    @sensors = Sensor.all
+    if @room.sensor_id.nil?
+      @sensors = Sensor.find_not_associated_sensors
+    else
+      @sensors = Sensor.not_ass_sensors_plus_actual(@room.sensor_id)
+    end
   end
 
   # PATCH/PUT /rooms/:id
   def update
-    if @room.sensor_id.empty?
+    paramz = room_params
+    if room_params[:sensor_id].empty?
+      paramz[:sensor_id] = nil
       @room.sensor_id = nil
     end
     respond_to do |format|
-      if @room.update(room_params)
+      if @room.update(paramz)
         format.html { redirect_to rooms_path, notice: 'Stanza modificata con successo' }
         format.json { render :index, status: :ok, location: @room }
       else

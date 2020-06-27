@@ -12,7 +12,7 @@
   <% if @rooms.present? %>
     <% @rooms.each do |room| %>
       <div class="col-12 col-12-mobile">
-        <h3>Nome del sensore: <b><%= room.nome.upcase %></b></h3>
+        <h3>Nome della stanza: <b><%= room.nome.upcase %></b></h3>
       </div>
       <%if room.sensor_id.nil? %>
         <div class="col-8 col-12-mobile">
@@ -22,10 +22,10 @@
           <%= link_to "Associa il sensore", edit_room_path(room), {class: 'button'} %>
         </div>
       <%else %>
-        <div class="col-4 col-4-mobile">
+        <div class="col-8 col-12-mobile">
           ID sensore associato: <h3><%= room.sensor_id %></h3>
         </div>
-        <div class="col-4 col-4-mobile">
+        <div class="col-4 col-12-mobile">
           <%= link_to "Guarda le temperature di questa stanza", room_temps_path(room), {class: 'button'} %>
         </div>
         <div class="col-12 col-12-mobile"><hr></div>

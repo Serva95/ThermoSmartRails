@@ -24,7 +24,13 @@ class Sensor < ApplicationRecord
   #belongs_to :room
   #belongs_to :user, required: true
 
+  def self.not_ass_sensors_plus_actual(actual_sensor_id)
+    Sensor.left_outer_joins(:room).where("rooms.sensor_id is null || rooms.sensor_id = ?", actual_sensor_id)
+  end
 
+  def self.find_not_associated_sensors
+    Sensor.left_outer_joins(:room).where("rooms.sensor_id is null")
+  end
 
 
 end

@@ -73,11 +73,15 @@
   </div>
   <div class="col-12 col-12-mobile"><hr></div>
   <div class="col-12 col-12-mobile">
-    <h4>Associa un sensore a questa stanza</h4>
+    <h4>Associa un sensore a questa stanza <i>(oppure rimuovi un sensore se ne esiste uno associato)</i></h4>
   </div>
-  <%if @sensors.present? %>
+  <%if @sensors.present? && @room.sensor_id.nil?%>
     <div class="col-6 col-12-mobile">
-      <%= form.collection_select(:sensor_id, @sensors, :id, :nome, { include_blank: true })%>
+      <%= form.collection_select(:sensor_id, @sensors, :id, :nome, { include_blank: "Non associare un sensore" })%>
+    </div>
+  <%elsif @sensors.present? && !@room.sensor_id.nil?%>
+    <div class="col-6 col-12-mobile">
+      <%= form.collection_select(:sensor_id, @sensors, :id, :nome, { include_blank: "Rimuovi il sensore attuale" })%>
     </div>
   <%else %>
     <div class="col-12 col-12-mobile">
