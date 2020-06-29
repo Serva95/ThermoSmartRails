@@ -7,6 +7,11 @@ class TempsController < ApplicationController
     @rooms = Room.all
   end
 
+  # GET  /rooms/:room_id/temps
+  def room_temps
+    @temps = Temp.find_room_temps(params[:room_id])
+  end
+
   def show
     @temp = Temp.find(params[:id])
   end

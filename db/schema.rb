@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_18_164819) do
+ActiveRecord::Schema.define(version: 2020_06_29_162843) do
 
   create_table "orari_on_offs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.bigint "room_id", null: false
@@ -37,7 +37,6 @@ ActiveRecord::Schema.define(version: 2020_06_18_164819) do
 
   create_table "temps", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.decimal "temp", precision: 3, scale: 1, null: false
-    t.decimal "hum", precision: 3, scale: 1, null: false
     t.datetime "created_at", null: false
     t.string "sensor_id", limit: 64
     t.index ["created_at"], name: "index_date"
