@@ -10,8 +10,11 @@ class TempsController < ApplicationController
   # GET  /rooms/:room_id/temps
   def room_temps
     room = Temp.find_room(params[:room_id])
-    @temps = Temp.find_room_temps(room)
-    @meds = Temp.get_medium_temps(room, 7)
+    ActiveRecord::Base.transaction do
+      @temps = Temp.find_room_temps(room)
+      @meds = Temp.get_medium_temps(room, 7)
+      @last = Temp.read_last(room)
+    end
   end
 
   def show

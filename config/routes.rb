@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   resources :rooms, only: [:index, :new, :edit, :create, :update, :destroy, :show] do
     resources :orari_on_offs, only: [:index, :new, :create, :edit, :update]
     get "/temps", to: "temps#room_temps"
+    post "/charts", to: "charts#index"
   end
   resources :temps, only: [:index]
   resources :sensors, only: [:index, :new, :edit, :create, :update, :destroy] do

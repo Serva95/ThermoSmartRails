@@ -13,11 +13,12 @@ class Temp < ApplicationRecord
   end
 
   def self.get_medium_temps(room, days)
-    Temp.where("sensor_id = ?", room.sensor_id).select("CAST(created_at AS DATE) AS giorno", "AVG(temp) AS temp").group(:giorno).order(giorno: :desc).limit(days)
+    meds = Temp.where("sensor_id = ?", room.sensor_id).select("CAST(created_at AS DATE) AS giorno", "AVG(temp) AS temp").group(:giorno).order(giorno: :desc).limit(days)
+    meds.reverse
   end
 
   def self.read_last(room)
-
+    Temp.where("sensor_id = ?", room.sensor_id).order(created_at: :desc).first
   end
 
 end

@@ -10,7 +10,7 @@
   </div>
 
   <% if @temps.present? %>
-    <div id="ls" class="col-12 col-12-mobile">Loading...</div>
+    <div id="ls" class="col-12 col-12-mobile"><h2><b>TEMP:</b> <%= @last.temp %>&deg;C <b>alle ore: </b> <%= @last.created_at.strftime("%T")%></h2></div>
     <div class="col-12 col-12-mobile"><br></div>
     <!--<div style="width:30em">-->
     <div class="chart-container oneLineGraph">
@@ -34,43 +34,46 @@
       <canvas id="medtempChart"></canvas>
     </div>
     <script>
-        function updateReal(){
-            $.post('Connector', {livesearch: "gettemp"}, function(data) {
-                $("#ls").html("<h2><b>TEMP:</b> "+data+"</h2>");
-            });
-            setTimeout( updateReal, 300000 );
-            //300 -> 288 lectures per day - once every 5 minutes
-        }
         function updateTemps(){
-            $.post('Connector', {livesearch: "updateTemps", dati:tempChart.data.labels[tempChart.data.labels.length - 1]}, function(data) {
-                if(data.length>5 && data.length<35){
-                    //output from the post call
-                    //21.5?01:10:18?55.9
-                    //0-4  5-8     14-4
-                    //for temp
-                    tempChart.data.labels.push(data.substr(5,8));
-                    tempChart.data.datasets[0].data.push(data.substr(0,4));
+            $.ajax({ url: 'charts.json',
+                type: 'POST',
+                beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+                dataType: "json",
+                data: { previous:tempChart.data.labels[tempChart.data.labels.length - 1]},
+                success: function(data) {
+                    if(!(data.temp == null && data.created_at == null)){
+                        //output from the post call
+                        //21.5?01:10:18?55.9
+                        //0-4  5-8     14-4
+                        //for temp
+                        tempChart.data.labels.push(data.created_at);
+                        tempChart.data.datasets[0].data.push(data.temp);
 
-                    if(tempChart.data.labels.length >= 100) {
-                        tempChart.data.labels.shift();
-                        tempChart.data.datasets[0].data.shift();
+                        if(tempChart.data.labels.length >= 100) {
+                            tempChart.data.labels.shift();
+                            tempChart.data.datasets[0].data.shift();
+                        }
+                        tempChart.update();
+                        $("#ls").html("<h2><b>TEMP:</b> "+data.temp+"&deg;C <b>alle ore: </b>"+data.created_at+"</h2>");
                     }
-                    tempChart.update();
+                },
+                error: function(){
+                    console.log("Error in update");
                 }
             });
             setTimeout( updateTemps, 840000 );
             // un update ogni 14 minuti
-            //setTimeout( updateTemps, 500 );
+            //setTimeout( updateTemps, 25000 );
         }
         function startUpdate(){
-            updateReal();
+            //updateReal();
             setTimeout( updateTemps, 5000 );
         }
-        //window.addEventListener("load", startUpdate);
+        window.addEventListener("load", startUpdate);
 
         let ctx = document.getElementById("tempChart").getContext("2d");
 
-        let tempChart = new Chart(ctx, {
+        var tempChart = new Chart(ctx, {
             type:'line',
             data: {
                 labels: [<% @temps.each do |temp| %>'<%=temp.created_at.strftime("%T")%>', <% end %>],
@@ -80,14 +83,7 @@
             },options:{responsive:!0,maintainAspectRatio:!1,aspectRatio:1,scales: {yAxes: [{ticks: { beginAtZero:!1}}]}}
         });
 
-        /*var labelsin = [%for(Lettura outmedrd : meds){out.print("'" + outmedrd.getReadingDate().toString() + "'" + ",");}%>];
-        var medtmpsin = [%for(Lettura outmedrd : meds){out.print(String.valueOf(outmedrd.getTemp()) + ",");}%>];
-        var medhumsin = [%for(Lettura outmedrd : meds){out.print(String.valueOf(outmedrd.getHum()) + ",");}%>];
-        var ctmedh = document.getElementById("medhumChart").getContext("2d");
-        */
-
         let ctmedt = document.getElementById("medtempChart").getContext("2d");
-
 
         let medtempChart = new Chart(ctmedt, {
         type:'line',
@@ -100,46 +96,66 @@
         });
 
         function updatedata(numberOfValues){
-            $.post('Connector', {livesearch: "getmeds", number: numberOfValues}, function(data) {
-                if(data.length>15){
-                    var datesN = data.search("#");
-                    var dates = data.slice(0, datesN);
-                    data = data.slice(datesN+1, data.length);
-                    var tempsN = data.search("#");
-                    var temps = data.slice(0, tempsN);
-                    data = data.slice(tempsN+1, data.length);
-                    var hums = data;
+            $.ajax({ url: 'charts.json',
+                type: 'POST',
+                beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+                dataType: "json",
+                data: { previous:tempChart.data.labels[tempChart.data.labels.length - 1]},
+                success: function(data) {
+                    if(!(data.temp == null && data.created_at == null)){
+                        //output from the post call
+                        //21.5?01:10:18?55.9
+                        //0-4  5-8     14-4
+                        //for temp
+                        tempChart.data.labels.push(data.created_at);
+                        tempChart.data.datasets[0].data.push(data.temp);
 
-                    var valueNumber = medhumChart.data.labels.length;
-                    var i;
+                        if(tempChart.data.labels.length >= 100) {
+                            tempChart.data.labels.shift();
+                            tempChart.data.datasets[0].data.shift();
+                        }
+                        tempChart.update();
+                        $("#ls").html("<h2><b>TEMP:</b> "+data.temp+"&deg;C <b>alle ore: </b>"+data.created_at+"</h2>");
+                    }
+                },
+                error: function(){
+                    console.log("Error in update");
+                }
+            });
+
+            /*$.post('Connector', {livesearch: "getmeds", number: numberOfValues}, function(data) {
+                if(data.length>15){
+                    let datesN = data.search("#");
+                    let dates = data.slice(0, datesN);
+                    data = data.slice(datesN+1, data.length);
+                    let tempsN = data.search("#");
+                    let temps = data.slice(0, tempsN);
+                    data = data.slice(tempsN+1, data.length);
+                    let hums = data;
+
+                    let valueNumber = medhumChart.data.labels.length;
+                    let i;
                     for(i=0; i<valueNumber; i++) {
                         medtempChart.data.labels.pop();
                         medtempChart.data.datasets[0].data.pop();
                     }
 
                     for(i=0; i<numberOfValues; i++) {
-                        var tmpN = dates.search(",");
-                        var tmpDates = dates.slice(0, tmpN);
-                        medhumChart.data.labels.push(tmpDates);
+                        let tmpN = dates.search(",");
+                        let tmpDates = dates.slice(0, tmpN);
+                        medtempChart.data.labels.push(tmpDates);
                         //update only once because the var with labels is the same for the 2 meds graphs
                         //so update both will result in duplicate labels for the dates
                         dates = dates.slice(tmpN+1, dates.length);
 
                         tmpN = temps.search(",");
-                        var tmpTemps = temps.slice(0, tmpN);
+                        let tmpTemps = temps.slice(0, tmpN);
                         medtempChart.data.datasets[0].data.push(tmpTemps);
-
                         temps = temps.slice(tmpN+1, temps.length);
-
-                        tmpN = hums.search(",");
-                        var tmpHums = hums.slice(0, tmpN);
-                        medhumChart.data.datasets[0].data.push(tmpHums);
-                        hums = hums.slice(tmpN+1, hums.length);
                     }
-                    medhumChart.update();
                     medtempChart.update();
                 }
-            });
+            });*/
         }
     </script>
   <%else %>
