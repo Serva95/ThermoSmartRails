@@ -68,10 +68,84 @@
 }
 /*end info box up*/
 
-html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside,
-canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby,
-section, summary, time, mark, audio, video {
+/* graph */
+
+.oneLineGraph {
+    position: relative;
+    height:65vh;
+    width: 100%;
+}
+
+.smallGraph {
+    position: relative;
+    height:65vh;
+    width: 31em;
+}
+.medgraphright {
+    position: absolute;
+    height:60vh;
+    top: 0;
+    left: 33em;
+    width: 31em;
+}
+@media screen and (max-height: 350px){
+    .oneLineGraph {
+        height:100vh;
+    }
+}
+@media screen and (max-height: 500px){
+    .oneLineGraph {
+        height:80vh;
+    }
+}
+/*@media screen and (max-width: 1680px) {
+    .oneLineGraph {
+        width: 65em;
+    }
+}
+@media screen and (max-width: 1280px) {
+    .oneLineGraph {
+        width: 65em;
+    }
+}*/
+@media screen and (max-width: 980px) {
+    .smallGraph {
+        width: 45%;
+    }
+}
+@media screen and (max-width: 840px) {
+    .smallGraph {
+        width: 90% !important;
+    }
+    .medgraphright {
+        position: relative;
+        left: 0;
+        width: 90% !important;
+    }
+    .oneLineGraph {
+        width: 100% !important;
+    }
+}
+@media screen and (max-width: 736px) {
+    .smallGraph {
+        width: 100% !important;
+    }
+    .medgraphright {
+        width: 100% !important;
+    }
+    .oneLineGraph {
+        width: 100% !important;
+    }
+}
+@media screen and (max-width: 480px) {
+    .oneLineGraph {
+        width: 100% !important;
+    }
+}
+
+/* fine graph */
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
     margin: 0;
     padding: 0;
     border: 0;

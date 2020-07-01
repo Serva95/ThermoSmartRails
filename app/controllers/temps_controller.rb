@@ -9,7 +9,9 @@ class TempsController < ApplicationController
 
   # GET  /rooms/:room_id/temps
   def room_temps
-    @temps = Temp.find_room_temps(params[:room_id])
+    room = Temp.find_room(params[:room_id])
+    @temps = Temp.find_room_temps(room)
+    @meds = Temp.get_medium_temps(room, 7)
   end
 
   def show
