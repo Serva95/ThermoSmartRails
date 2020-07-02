@@ -21,7 +21,7 @@
       <h3>Scegli il numero di dati che vuoi vedere per le medie</h3>
     </div>
     <div class="col-4 col-12-mobile">
-      <select id="datanumber" onchange="updatedata(this.value)">
+      <select id="datanumber" onchange="updateMeds(this.value)">
         <option value="7">7
         <option value="15">15
         <option value="30">30
@@ -34,12 +34,35 @@
       <canvas id="medtempChart"></canvas>
     </div>
     <script>
+        var crtTemps = document.getElementById("tempChart").getContext("2d");
+        var crtMedTemp = document.getElementById("medtempChart").getContext("2d");
+
+        var tempChart = new Chart(crtTemps, {
+            type:'line',
+            data: {
+                labels: [<% @temps.each do |temp| %>'<%=temp.created_at.strftime("%T")%>', <% end %>],
+                datasets: [{label: 'Temperatures \u00B0C',
+                    data: [<% @temps.each do |temp| %><%=temp.temp%>, <% end %>],
+                    fill:!1, borderColor:"#3cb371", lineTension:0.1}]},
+            options:{responsive:!0,maintainAspectRatio:!1,aspectRatio:1,scales:{yAxes:[{ticks:{beginAtZero:!1}}]}}
+        });
+
+        var medtempChart = new Chart(crtMedTemp, {
+            type:'line',
+            data:{
+                labels:[<% @meds.each do |m| %>'<%=m.giorno.strftime("%d-%m-%y")%>', <% end %>],
+                datasets:[{label:'Medium Temps \u00B0C',
+                    data:[<% @meds.each do |m| %><%=m.temp %>, <% end %>],
+                    fill:!1,borderColor:"#216bff",lineTension:0.1}]},
+            options:{responsive:!0,maintainAspectRatio:!1,aspectRatio:1,scales:{yAxes:[{ticks:{beginAtZero:!1}}]}}
+        });
+
         function updateTemps(){
-            $.ajax({ url: 'charts.json',
+            $.ajax({ url: 'updateTemps.json',
                 type: 'POST',
                 beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
                 dataType: "json",
-                data: { previous:tempChart.data.labels[tempChart.data.labels.length - 1]},
+                data: { previous:tempChart.data.labels[tempChart.data.labels.length - 1], sensor_id:'<%= params[:sensor_id]%>'},
                 success: function(data) {
                     if(!(data.temp == null && data.created_at == null)){
                         //output from the post call
@@ -57,106 +80,44 @@
                         $("#ls").html("<h2><b>TEMP:</b> "+data.temp+"&deg;C <b>alle ore: </b>"+data.created_at+"</h2>");
                     }
                 },
-                error: function(){
-                    console.log("Error in update");
+                error: function (request, status, error) {
+                    console.log(request.responseText + " STATUS: " + status + " ERROR: " + error);
                 }
             });
             setTimeout( updateTemps, 840000 );
             // un update ogni 14 minuti
             //setTimeout( updateTemps, 25000 );
         }
-        function startUpdate(){
-            //updateReal();
-            setTimeout( updateTemps, 5000 );
-        }
-        window.addEventListener("load", startUpdate);
 
-        let ctx = document.getElementById("tempChart").getContext("2d");
-
-        var tempChart = new Chart(ctx, {
-            type:'line',
-            data: {
-                labels: [<% @temps.each do |temp| %>'<%=temp.created_at.strftime("%T")%>', <% end %>],
-                datasets: [{label: 'Temperatures \u00B0C',
-                    data: [<% @temps.each do |temp| %><%=temp.temp%>, <% end %>],
-                    fill:!1, borderColor:"#3cb371", lineTension:0.1}]
-            },options:{responsive:!0,maintainAspectRatio:!1,aspectRatio:1,scales: {yAxes: [{ticks: { beginAtZero:!1}}]}}
-        });
-
-        let ctmedt = document.getElementById("medtempChart").getContext("2d");
-
-        let medtempChart = new Chart(ctmedt, {
-        type:'line',
-        data:{
-            labels:[<% @meds.each do |m| %>'<%=m.giorno.strftime("%d-%m-%y")%>', <% end %>],
-            datasets:[{label:'Medium Temps \u00B0C',
-                data:[<% @meds.each do |m| %><%=m.temp %>, <% end %>],
-                fill:!1,borderColor:"#216bff",lineTension:0.1}]},
-        options:{responsive:!0,maintainAspectRatio:!1,aspectRatio:1,scales:{yAxes:[{ticks:{beginAtZero:!1}}]}}
-        });
-
-        function updatedata(numberOfValues){
-            $.ajax({ url: 'charts.json',
+        function updateMeds(numberOfValues){
+            $.ajax({ url: 'updateMeds.json',
                 type: 'POST',
                 beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
                 dataType: "json",
-                data: { previous:tempChart.data.labels[tempChart.data.labels.length - 1]},
+                data: { days:numberOfValues, sensor_id:'<%= params[:sensor_id]%>'},
                 success: function(data) {
-                    if(!(data.temp == null && data.created_at == null)){
-                        //output from the post call
-                        //21.5?01:10:18?55.9
-                        //0-4  5-8     14-4
-                        //for temp
-                        tempChart.data.labels.push(data.created_at);
-                        tempChart.data.datasets[0].data.push(data.temp);
-
-                        if(tempChart.data.labels.length >= 100) {
-                            tempChart.data.labels.shift();
-                            tempChart.data.datasets[0].data.shift();
+                    if(data.meds != null){
+                        let valueNumber = medtempChart.data.labels.length;
+                        for(let i=0; i<valueNumber; i++) {
+                            medtempChart.data.labels.pop();
+                            medtempChart.data.datasets[0].data.pop();
                         }
-                        tempChart.update();
-                        $("#ls").html("<h2><b>TEMP:</b> "+data.temp+"&deg;C <b>alle ore: </b>"+data.created_at+"</h2>");
+                        $.each(data.meds, function( index, value ) {
+                            medtempChart.data.labels.push(value.giorno);
+                            medtempChart.data.datasets[0].data.push(value.temp);
+                        });
+                        medtempChart.update();
                     }
                 },
-                error: function(){
-                    console.log("Error in update");
+                error: function (request, status, error) {
+                    console.log(request.responseText + " STATUS: " + status + " ERROR: " + error);
                 }
             });
-
-            /*$.post('Connector', {livesearch: "getmeds", number: numberOfValues}, function(data) {
-                if(data.length>15){
-                    let datesN = data.search("#");
-                    let dates = data.slice(0, datesN);
-                    data = data.slice(datesN+1, data.length);
-                    let tempsN = data.search("#");
-                    let temps = data.slice(0, tempsN);
-                    data = data.slice(tempsN+1, data.length);
-                    let hums = data;
-
-                    let valueNumber = medhumChart.data.labels.length;
-                    let i;
-                    for(i=0; i<valueNumber; i++) {
-                        medtempChart.data.labels.pop();
-                        medtempChart.data.datasets[0].data.pop();
-                    }
-
-                    for(i=0; i<numberOfValues; i++) {
-                        let tmpN = dates.search(",");
-                        let tmpDates = dates.slice(0, tmpN);
-                        medtempChart.data.labels.push(tmpDates);
-                        //update only once because the var with labels is the same for the 2 meds graphs
-                        //so update both will result in duplicate labels for the dates
-                        dates = dates.slice(tmpN+1, dates.length);
-
-                        tmpN = temps.search(",");
-                        let tmpTemps = temps.slice(0, tmpN);
-                        medtempChart.data.datasets[0].data.push(tmpTemps);
-                        temps = temps.slice(tmpN+1, temps.length);
-                    }
-                    medtempChart.update();
-                }
-            });*/
         }
+        function startUpdate(){
+            setTimeout( updateTemps, 5000 );
+        }
+        window.addEventListener("load", startUpdate);
     </script>
   <%else %>
     <div class="col-12 col-12-mobilep">
