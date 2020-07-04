@@ -3,8 +3,12 @@
   <div class="col-2 col-4-mobile ">
     <%= link_to 'Back', rooms_path, class: "button icon solid fa-chevron-left"%>
   </div>
-  <div class="col-9 col-8-mobile">
+  <div class="col-10 col-8-mobile">
     <h2>Dettagli della stanza: <%= @room.nome %></h2>
+  </div>
+  <hr class="col-12 col-12-mobile">
+  <div class="col-12 col-12-mobile">
+    <%= link_to "Vedi gli orari di accensione e spegnimento del sistema associati alla stanza", room_orari_on_offs_path(@room), {class: 'button'} %>
   </div>
 
   <div class="col-12 col-12-mobile">
@@ -23,26 +27,22 @@
     </div>
   <% end%>
   <div class="col-12 col-12-mobile">
-    <h4><strong onmouseover="$('#hint1').show(450,'swing')" onmouseout="$('#hint1').hide(850,'swing')">Temperatura massima della stanza:</strong> <%= @room.max_temp %> &deg;C</h4>
+    <h4><strong onmouseover="$('#hint1').show(100,'swing')" onmouseout="$('#hint1').hide(1000,'swing')">Temperatura massima della stanza:</strong> <%= @room.max_temp %> &deg;C</h4>
   </div>
   <div class="col-12 col-12-mobile" id="hint1" hidden>
     <h5>Temperatura Massima (Se la temperatura della stanza supera questo valore il riscaldamento della stessa si bloccher&agrave;)</h5>
   </div>
   <div class="col-12 col-12-mobile">
-    <h4><strong onmouseover="$('#hint2').show(450,'swing')" onmouseout="$('#hint2').hide(850,'swing')">Temperatura minima della stanza:</strong> <%= @room.min_temp %> &deg;C</h4>
+    <h4><strong onmouseover="$('#hint2').show(100,'swing')" onmouseout="$('#hint2').hide(1000,'swing')">Temperatura minima della stanza:</strong> <%= @room.min_temp %> &deg;C</h4>
   </div>
   <div class="col-12 col-12-mobile" id="hint2" hidden>
     <h5>Temperatura Minima (Nei momenti in cui il riscaldamento &egrave; in modalit&agrave; programma, se la temperatura scender&agrave; sotto questo valore, verr&agrave; attivato il riscaldamento per riportarla a tale valore)</h5>
   </div>
   <div class="col-12 col-12-mobile">
-    <h4><strong onmouseover="$('#hint3').show(450,'swing')" onmouseout="$('#hint3').hide(850,'swing')">Temperatura minima assoluta della stanza:</strong> <%= @room.absolute_min %> &deg;C</h4>
+    <h4><strong onmouseover="$('#hint3').show(100,'swing')" onmouseout="$('#hint3').hide(1000,'swing')">Temperatura minima assoluta della stanza:</strong> <%= @room.absolute_min %> &deg;C</h4>
   </div>
   <div class="col-12 col-12-mobile" id="hint3" hidden>
     <h5>Temperatura Minima Assoluta (Temperatura sotto la quale il sistema &egrave; sempre attivo e riscalda anche se &egrave; impostato su spento. Questo avviene per evitare temperature troppo basse che potrebbero danneggiare le tubature.)</h5>
-  </div>
-  <hr class="col-12 col-12-mobile">
-  <div class="col-12 col-12-mobile">
-    <%= link_to "Vedi gli orari di accensione e spegnimento del sistema associati alla stanza", room_orari_on_offs_path(@room), {class: 'button'} %>
   </div>
 
 </div>

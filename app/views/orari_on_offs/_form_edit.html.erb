@@ -1,0 +1,86 @@
+
+<% unless @errors.nil? %>
+  <div id="error_explanation" class="col-12 col-12-mobilep">
+    <h2><%= pluralize(@errors.count, "error") %> Errore nel salvataggio della stanza:</h2>
+    <ul>
+      <% @errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end%>
+
+<div class="col-12 col-12-mobile">
+  <h3><b>Orari di accensione/spegnimento</b></h3>
+  <h3>Ricorda che l'orario di spegnimento deve essere successivo a quello di accensione
+    <br>Ricorda inoltre che l'orario di spegnimento della fascia 1 deve essere antecedente a quello di accensione della fascia 2 e cos&igrave; via, altrimenti verrano scartati i dati non corretti</h3>
+  <h4><i>Solo la prima fascia &egrave; obbligatoria, le altre, se lasciate vuote, verranno ignorate. Ricorda: se lasci vuota la fascia 2, la fascia 3 non verr&agrave; letta.</i></h4>
+</div>
+<%= form_tag room_orari_on_off_edit_path, method: "put", class: "row gtr-uniform" do %>
+  <%unless @orari.nil?%>
+    <%= hidden_field_tag "id_1", value=@orari[0].id %>
+    <div class="col-6 col-12-mobile">
+      <h4>Orario Accensione Fascia 1</h4>
+      <%= time_field_tag "orari_on_off[timeonuno]", value= @orari[0].orario_accensione.strftime("%T"), required: true%>
+    </div>
+    <div class="col-6 col-12-mobile">
+      <h4>Orario Spegnimento Fascia 1</h4>
+      <%= time_field_tag "orari_on_off[timeoffuno]", value= @orari[0].orario_spegnimento.strftime("%T"), required: true %>
+    </div>
+    <%if @orari[1].nil? %>
+      <div class="col-6 col-12-mobile">
+        <h4>Orario Accensione Fascia 2</h4>
+        <%= time_field_tag "orari_on_off[timeondue]" %>
+      </div>
+      <div class="col-6 col-12-mobile">
+        <h4>Orario Spegnimento Fascia 2</h4>
+        <%= time_field_tag "orari_on_off[timeoffdue]" %>
+      </div>
+    <%else %>
+      <%= hidden_field_tag "id_2", value=@orari[1].id %>
+      <div class="col-6 col-12-mobile">
+        <h4>Orario Accensione Fascia 2</h4>
+        <%= time_field_tag "orari_on_off[timeondue]", value= @orari[1].orario_spegnimento.strftime("%T") %>
+      </div>
+      <div class="col-6 col-12-mobile">
+        <h4>Orario Spegnimento Fascia 2</h4>
+        <%= time_field_tag "orari_on_off[timeoffdue]", value= @orari[1].orario_spegnimento.strftime("%T") %>
+      </div>
+    <%end %>
+    <%if @orari[2].nil? %>
+      <div class="col-6 col-12-mobile">
+        <h4>Orario Accensione Fascia 3</h4>
+        <%= time_field_tag "orari_on_off[timeontre]" %>
+      </div>
+      <div class="col-6 col-12-mobile">
+        <h4>Orario Spegnimento Fascia 3</h4>
+        <%= time_field_tag "orari_on_off[timeofftre]" %>
+      </div>
+    <%else %>
+      <%= hidden_field_tag "id_3", value=@orari[2].id %>
+      <div class="col-6 col-12-mobile">
+        <h4>Orario Accensione Fascia 3</h4>
+        <%= time_field_tag "orari_on_off[timeontre]", value= @orari[2].orario_spegnimento.strftime("%T") %>
+      </div>
+      <div class="col-6 col-12-mobile">
+        <h4>Orario Spegnimento Fascia 3</h4>
+        <%= time_field_tag "orari_on_off[timeofftre]", value= @orari[2].orario_spegnimento.strftime("%T") %>
+      </div>
+    <%end %>
+    <div class="col-12 col-12-mobile"><br></div>
+    <div class="col-12 col-12-mobile">
+      <%= submit_tag "Inserisci gli orari" %>
+    </div>
+  <% end %>
+<%end %>
+
+<script type="application/javascript">
+    function copia(sectionID) {
+        $("#orari_on_off_"+sectionID+"_timeonuno").val($("#orari_on_off_0_timeonuno").val())
+        $("#orari_on_off_"+sectionID+"_timeoffuno").val($("#orari_on_off_0_timeoffuno").val())
+        $("#orari_on_off_"+sectionID+"_timeondur").val($("#orari_on_off_0_timeondue").val())
+        $("#orari_on_off_"+sectionID+"_timeoffdue").val($("#orari_on_off_0_timeoffdue").val())
+        $("#orari_on_off_"+sectionID+"_timeontre").val($("#orari_on_off_0_timeontre").val())
+        $("#orari_on_off_"+sectionID+"_timeofftre").val($("#orari_on_off_0_timeofftre").val())
+    }
+</script>

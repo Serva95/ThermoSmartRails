@@ -14,7 +14,7 @@ class RoomsController < ApplicationController
   # GET /rooms/new
   def new
     @room = Room.new
-    @sensors = Sensor.all
+    @sensors = Sensor.find_not_associated_sensors
   end
 
   # POST /rooms

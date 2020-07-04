@@ -50,7 +50,7 @@
         var medtempChart = new Chart(crtMedTemp, {
             type:'line',
             data:{
-                labels:[<% @meds.each do |m| %>'<%=m.giorno.strftime("%d-%m-%y")%>', <% end %>],
+                labels:[<% @meds.each do |m| %>'<%=m.giorno.strftime("%d-%m-%Y")%>', <% end %>],
                 datasets:[{label:'Medium Temps \u00B0C',
                     data:[<% @meds.each do |m| %><%=m.temp %>, <% end %>],
                     fill:!1,borderColor:"#216bff",lineTension:0.1}]},

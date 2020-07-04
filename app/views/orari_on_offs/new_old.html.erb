@@ -1,0 +1,12 @@
+<div class="row gtr-uniform">
+  <div class="col-2 col-4-mobile ">
+    <%= link_to 'Back', room_orari_on_offs_path, class: "button icon solid fa-chevron-left"%>
+  </div>
+  <div class="col-9 col-8-mobile">
+    <h2>Inserisci gli orari della stanza</h2>
+  </div>
+
+  <hr class="col-12 col-12-mobile">
+
+  <%= render 'form', orari: @orari %>
+</div>

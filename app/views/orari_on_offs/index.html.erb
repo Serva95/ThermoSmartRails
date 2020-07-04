@@ -7,13 +7,15 @@
   </div>
 
   <% if @orari.present? %>
-    <h2>bottone modifiche orari</h2>
     <%previous = nil %>
     <% @orari.each do |orario| %>
       <%if orario.giorno != previous %>
         <div class="col-12 col-12-mobile"><hr></div>
-        <div class="col-12 col-12-mobile">
+        <div class="col-6 col-12-mobile">
           <h3><b><%= @days[orario.giorno] %></b></h3>
+        </div>
+        <div class="col-6 col-12-mobile">
+        <%= link_to 'Modifica orari '+@days[orario.giorno], room_orari_on_off_edit_path(params[:room_id], giorno:orario.giorno), {class: 'button'} %>
         </div>
       <% previous = orario.giorno
         end %>

@@ -1,6 +1,7 @@
 class Room < ApplicationRecord
   belongs_to :sensor, required: false
   has_many :orari_on_offs, dependent: :destroy
+  accepts_nested_attributes_for :orari_on_offs
 
   def self.join_sensor(id)
     room = Room.find(id)

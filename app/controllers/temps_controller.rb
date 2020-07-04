@@ -4,14 +4,17 @@ class TempsController < ApplicationController
 
   # GET /temps
   def index
-    @rooms = Room.all
+    ActiveRecord::Base.transaction do
+      @rooms = Room.all
+      @temps = Temp.last_temp_of_rooms(@rooms)
+    end
   end
 
   # GET  /rooms/:room_id/temps
   def room_temps
     ActiveRecord::Base.transaction do
       @temps = Temp.find_room_temps(params[:sensor_id])
-      @meds = Temp.get_medium_temps(params[:sensor_id], 7)
+      @meds = Temp.get_medium_temps(params[:sensor_id], "7")
       @last = Temp.read_last(params[:sensor_id])
     end
   end

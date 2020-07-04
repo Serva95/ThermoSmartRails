@@ -1,5 +1,5 @@
 class OrariOnOffsController < ApplicationController
-  before_action :set_orari, only: [:edit, :update]
+  before_action :set_orari, only: [:edit]
 
   def index
     @orari = OrariOnOff.where("room_id = ?", params[:room_id])
@@ -11,9 +11,9 @@ class OrariOnOffsController < ApplicationController
     @days = %w[Lunedì Martedì Mercoledì Giovedì Venerdì Sabato Domenica]
   end
 
-  # POST /rooms
+  # POST /rooms/:room_id/orari_on_offs
   def create
-    @orario = OrariOnOff.parse(params)
+    @orario = OrariOnOff.parse(params[:orari_on_off])
     respond_to do |format|
       if @orario.nil?
         format.html { redirect_to new_room_orari_on_off_path(params[:room_id]), notice: 'Errore nell\'inserimento degli orari, controlla meglio e riprova'   }
@@ -28,14 +28,18 @@ class OrariOnOffsController < ApplicationController
     end
   end
 
-  #GET /rooms/:id/edit
+  #GET /rooms/:room_id/orari_on_offs/edit
   def edit
+    @days = %w[Lunedì Martedì Mercoledì Giovedì Venerdì Sabato Domenica]
   end
 
-  # PATCH/PUT /rooms/:id
+  # PATCH/PUT /rooms/:room_id/orari_on_offs/edit
+  # <ActionController::Parameters {"_method"=>"put", "authenticity_token"=>".....", "id_1"=>"13", "orari_on_off"=>{"timeonuno"=>"06:30:00", "timeoffuno"=>"08:00:00", "timeondue"=>"11:00:00", "timeoffdue"=>"11:00:00", "timeontre"=>"", "timeofftre"=>""}, "id_2"=>"14", "commit"=>"Inserisci gli orari", "controller"=>"orari_on_offs", "action"=>"update", "room_id"=>"1"} permitted: false>
   def update
+    byebug
+    @orari = OrariOnOff.parse(params[:orari_on_off])
     respond_to do |format|
-      if @orario.update(room_params)
+      if OrariOnOff.update(@orari)
         format.html { redirect_to room_orari_on_offs_path, notice: 'Stanza modificata con successo' }
         format.json { render :index, status: :ok, location: @orario }
       else
@@ -47,8 +51,8 @@ class OrariOnOffsController < ApplicationController
 
   private
 
-  def set_orario
-    @orario = OrariOnOff.find(params[:id])
+  def set_orari
+    @orari = OrariOnOff.find_orari(params[:room_id], params[:giorno])
   end
 
 end
