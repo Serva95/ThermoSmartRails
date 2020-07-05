@@ -2,7 +2,7 @@ class OrariOnOffsController < ApplicationController
   before_action :set_orari, only: [:edit]
 
   def index
-    @orari = OrariOnOff.where("room_id = ?", params[:room_id])
+    @orari = OrariOnOff.where(:room_id => params[:room_id]).order(giorno: :asc).order(fascia: :asc)
     @days = %w[Lunedì Martedì Mercoledì Giovedì Venerdì Sabato Domenica]
   end
 
@@ -30,20 +30,22 @@ class OrariOnOffsController < ApplicationController
 
   #GET /rooms/:room_id/orari_on_offs/edit
   def edit
+    if params[:error] == "true"
+      @error = true
+    end
     @days = %w[Lunedì Martedì Mercoledì Giovedì Venerdì Sabato Domenica]
   end
 
   # PATCH/PUT /rooms/:room_id/orari_on_offs/edit
   # <ActionController::Parameters {"_method"=>"put", "authenticity_token"=>".....", "id_1"=>"13", "orari_on_off"=>{"timeonuno"=>"06:30:00", "timeoffuno"=>"08:00:00", "timeondue"=>"11:00:00", "timeoffdue"=>"11:00:00", "timeontre"=>"", "timeofftre"=>""}, "id_2"=>"14", "commit"=>"Inserisci gli orari", "controller"=>"orari_on_offs", "action"=>"update", "room_id"=>"1"} permitted: false>
   def update
-    byebug
-    @orari = OrariOnOff.parse(params[:orari_on_off])
+    ok = OrariOnOff.parse_edit(params)
     respond_to do |format|
-      if OrariOnOff.update(@orari)
-        format.html { redirect_to room_orari_on_offs_path, notice: 'Stanza modificata con successo' }
+      if ok
+        format.html { redirect_to room_orari_on_offs_path(params[:room_id]), notice: 'Orario aggiornati con successo' }
         format.json { render :index, status: :ok, location: @orario }
       else
-        format.html { render :edit }
+        format.html { redirect_to room_orari_on_off_edit_path(params[:room_id], giorno: params[:giorno], error: true) }
         format.json { render json: @orario.errors, status: :unprocessable_entity }
       end
     end

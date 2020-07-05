@@ -6,6 +6,12 @@
     <h2>Modifica gli orari della stanza relativi al giorno: <b><%=@days[@orari[0].giorno]%></b></h2>
   </div>
 
+  <% unless @error.nil? %>
+    <div class="col-12 col-12-mobile">
+      <h2 class="error">Errore nella modifica degli orari, controlla meglio i campi e riprova</h2>
+    </div>
+  <% end %>
+
   <hr class="col-12 col-12-mobile">
 
   <%= render 'form_edit', orari: @orari %>
