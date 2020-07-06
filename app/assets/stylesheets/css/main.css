@@ -7,7 +7,16 @@
     max-width: calc(100% - 5em);
     width: 60em;
 }
-/*fine*/
+
+/*testo small*/
+.smallText{
+    font-size:0.7em;
+}
+
+/*cursor pointer*/
+.pointer{
+    cursor: pointer;
+}
 
 /*per la chat*/
 .message-content {
@@ -17,7 +26,6 @@
     background: royalblue;
     color: white;
 }
-/*fine chat*/
 
 /*notifiche mobile*/
 @media screen and (max-width: 840px) {
@@ -45,11 +53,9 @@
 
 /*per icone nere*/
 .black {color: black;}
-/*fine icone nere*/
 
 /*per icone blu*/
 .blu {color: blue;}
-/*fine icone blu*/
 
 /*info box up*/
 .info {
@@ -66,10 +72,8 @@
     font-style: italic;
     color: red;
 }
-/*end info box up*/
 
 /* graph */
-
 .oneLineGraph {
     position: relative;
     height:65vh;
@@ -79,13 +83,6 @@
 .smallGraph {
     position: relative;
     height:65vh;
-    width: 31em;
-}
-.medgraphright {
-    position: absolute;
-    height:60vh;
-    top: 0;
-    left: 33em;
     width: 31em;
 }
 @media screen and (max-height: 350px){
@@ -117,20 +114,12 @@
     .smallGraph {
         width: 90% !important;
     }
-    .medgraphright {
-        position: relative;
-        left: 0;
-        width: 90% !important;
-    }
     .oneLineGraph {
         width: 100% !important;
     }
 }
 @media screen and (max-width: 736px) {
     .smallGraph {
-        width: 100% !important;
-    }
-    .medgraphright {
         width: 100% !important;
     }
     .oneLineGraph {
@@ -142,7 +131,6 @@
         width: 100% !important;
     }
 }
-
 /* fine graph */
 
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {

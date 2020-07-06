@@ -26,7 +26,12 @@
           ID sensore associato: <h4><%= room.sensor_id %></h4>
         </div>
         <div class="col-6 col-12-mobile">
-          <h4>Ultima temperatura letta: <%= @temps.fetch(room.sensor_id)[0] %>&deg;C il: <%= @temps.fetch(room.sensor_id)[1] %></h4>
+          <%if @temps.fetch(room.sensor_id)[0].nil?%>
+            <h4>Ancora non è stata letta alcuna temperatura</h4>
+            <h4>Torna tra un po' per permettere al sensore di leggerne almeno una</h4>
+          <%else%>
+            <h4>Ultima temperatura letta: <%= @temps.fetch(room.sensor_id)[0] %>&deg;C il: <%= @temps.fetch(room.sensor_id)[1] %></h4>
+          <%end%>
         </div>
         <div class="col-4 col-12-mobile">
           <%= link_to "Guarda le temperature di questa stanza", room_temps_path(room, sensor_id: room.sensor_id), {class: 'button'} %>
@@ -38,10 +43,5 @@
     <div class="col-12 col-12-mobilep">
       <h3>Non c'&egrave; alcuna temperatura, aggiungi prima una stanza, associale un sensore, poi torna in questa pagina</h3>
     </div>
-  <% end %>
-  <!--<script type="application/javascript">
-      setTimeout(function(){
-          window.location.reload(1);
-      }, 2*60*1000); /* minuti * secondi * 1000 */
-  </script>-->
+  <%end %>
 </div>

@@ -58,11 +58,11 @@
         });
 
         function updateTemps(){
-            $.ajax({ url: 'updateTemps.json',
+            $.ajax({ url: '<%= params[:sensor_id]%>'+'/updateTemps.json',
                 type: 'POST',
                 beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
                 dataType: "json",
-                data: { previous:tempChart.data.labels[tempChart.data.labels.length - 1], sensor_id:'<%= params[:sensor_id]%>'},
+                data: { previous:tempChart.data.labels[tempChart.data.labels.length - 1]},
                 success: function(data) {
                     if(!(data.temp == null && data.created_at == null)){
                         //output from the post call
@@ -90,11 +90,11 @@
         }
 
         function updateMeds(numberOfValues){
-            $.ajax({ url: 'updateMeds.json',
+            $.ajax({ url: '<%= params[:sensor_id]%>'+'/updateMeds.json',
                 type: 'POST',
                 beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
                 dataType: "json",
-                data: { days:numberOfValues, sensor_id:'<%= params[:sensor_id]%>'},
+                data: { days:numberOfValues},
                 success: function(data) {
                     if(data.meds != null){
                         let valueNumber = medtempChart.data.labels.length;

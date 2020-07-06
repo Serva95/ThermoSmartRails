@@ -14,9 +14,10 @@ Rails.application.routes.draw do
     get "/orari_on_off/edit", to: "orari_on_offs#edit"
     patch "/orari_on_off/edit", to: "orari_on_offs#update"
     put "/orari_on_off/edit", to: "orari_on_offs#update"
-    get "/temps", to: "temps#room_temps"
-    post "/updateTemps", to: "charts#update_temps"
-    post "/updateMeds", to: "charts#update_meds"
+    post "temps/:sensor_id/updateTemps", to: "charts#update_temps"
+    post "temps/:sensor_id/updateMeds", to: "charts#update_meds"
+    #get "/temps", to: "temps#room_temps"
+    get "/temps/:sensor_id", as: "temps", to: "temps#room_temps"
   end
   resources :temps, only: [:index]
   resources :sensors, only: [:index, :new, :edit, :create, :update, :destroy] do

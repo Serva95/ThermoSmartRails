@@ -24,7 +24,7 @@ class Temp < ApplicationRecord
     rooms.each do |room|
       unless room.sensor_id.blank?
         last = read_last(room.sensor_id)
-        h.store(room.sensor_id, [last.temp, last.created_at.strftime("%d-%m-%Y - %T")])
+        h.store(room.sensor_id, [last.nil? ? nil : last.temp, last.nil? ? nil : last.created_at.strftime("%d-%m-%Y - %T")])
       end
     end
     h
