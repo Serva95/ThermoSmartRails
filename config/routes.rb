@@ -11,13 +11,15 @@ Rails.application.routes.draw do
   resources :users, only: [:show]
   resources :rooms, only: [:index, :new, :edit, :create, :update, :destroy, :show] do
     resources :orari_on_offs, only: [:index, :new, :create]
-    get "/orari_on_off/edit", to: "orari_on_offs#edit"
-    patch "/orari_on_off/edit", to: "orari_on_offs#update"
-    put "/orari_on_off/edit", to: "orari_on_offs#update"
+    get "orari_on_off/edit", to: "orari_on_offs#edit"
+    patch "orari_on_off/edit", to: "orari_on_offs#update"
+    put "orari_on_off/edit", to: "orari_on_offs#update"
     post "temps/:sensor_id/updateTemps", to: "charts#update_temps"
     post "temps/:sensor_id/updateMeds", to: "charts#update_meds"
-    #get "/temps", to: "temps#room_temps"
-    get "/temps/:sensor_id", as: "temps", to: "temps#room_temps"
+    get "temps/:sensor_id", as: "temps", to: "temps#room_temps"
+    put "manual_active", to: "rooms#manual_active"
+    put "manual_inactive", to: "rooms#manual_inactive"
+    put "manual_off", to: "rooms#manual_off"
   end
   resources :temps, only: [:index]
   resources :sensors, only: [:index, :new, :edit, :create, :update, :destroy] do

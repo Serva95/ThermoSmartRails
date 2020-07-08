@@ -1,4 +1,3 @@
-<!--Pagina profilo utente-->
 <div class="row gtr-uniform">
   <div class="col-2 col-4-mobile ">
     <%= link_to 'Back', rooms_path, class: "button icon solid fa-chevron-left"%>
@@ -47,12 +46,53 @@
     <h5 onclick="$('#hint3').hide(1000,'swing')">Temperatura Minima Assoluta (Temperatura sotto la quale il sistema &egrave; sempre attivo e riscalda anche se &egrave; impostato su spento. Questo avviene per evitare temperature troppo basse che potrebbero danneggiare le tubature.)<b class="pointer"> CHIUDI [X]</b></h5>
   </div>
   <div class="col-12 col-12-mobile">
-    <h3><b>Stato attuale del sistema relativo alla stanza</b></h3>
+    <h2><b>Stato attuale del sistema relativo alla stanza</b></h2>
   </div>
-  <div class="col-12 col-12-mobile">
-    Attualmente da fare
-  </div>
-
+  <%if @room.manual_active%>
+    <div class="col-12 col-12-mobile">
+      <h4>Attualmente nella stanza è attivo il controllo manuale per mantenere la temperatura massima impostata</h4>
+    </div>
+    <div class="col-12 col-12-mobile">
+      <%=link_to "Ritorna al controllo automatico", room_manual_active_path(@room), method: :put, class: 'button' %>
+    </div>
+  <%elsif @room.manual_inactive%>
+    <div class="col-12 col-12-mobile">
+      <h4>Attualmente nella stanza è attivo il controllo manuale per mantenere la temperatura minima impostata</h4>
+    </div>
+    <div class="col-12 col-12-mobile">
+      <%=link_to "Ritorna al controllo automatico", room_manual_inactive_path(@room), method: :put, class: 'button' %>
+    </div>
+  <%elsif @room.manual_off %>
+    <div class="col-12 col-12-mobile">
+      <h4>Attualmente il controllo nella stanza è inattivo ed è impostata per mantenere la temperatura minima assoluta</h4>
+    </div>
+    <div class="col-12 col-12-mobile">
+      <%=link_to "Ritorna al controllo automatico", room_manual_off_path(@room), method: :put, class: 'button' %>
+    </div>
+  <%else %>
+    <div class="col-12 col-12-mobile">
+      <h4>Attualmente la stanza è controllata automaticamente dal sistema secondo gli orari impostati</h4>
+    </div>
+    <div class="col-12 col-12-mobile"><hr></div>
+    <div class="col-8 col-12-narrower">
+      <h4>Clicca sul bottone e attiva controllo manuale per mantenere la temperatura massima impostata</h4>
+    </div>
+    <div class="col-4 col-12-narrower">
+      <%=link_to "Attiva manuale massimo", room_manual_active_path(@room), method: :put, class: 'button' %>
+    </div>
+    <div class="col-8 col-12-narrower">
+      <h4>Clicca sul bottone e attiva controllo manuale per mantenere la temperatura massima impostata</h4>
+    </div>
+    <div class="col-4 col-12-narrower">
+      <%=link_to "Attiva manuale minimo", room_manual_inactive_path(@room), method: :put, class: 'button' %>
+    </div>
+    <div class="col-8 col-12-narrower">
+      <h4>Clicca sul bottone e disattiva il controllo automatico sulla stanza, verrà mantenuta la temperatura minima assoluta</h4>
+    </div>
+    <div class="col-4 col-12-narrower">
+      <%=link_to "Spegni il sistema di controllo", room_manual_off_path(@room), method: :put, class: 'button' %>
+    </div>
+  <%end %>
 
 </div>
 
