@@ -4,8 +4,32 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-one: {}
-# column: value
-#
-two: {}
-# column: value
+last_temp:
+  temp: 26.5
+  created_at: "2018-11-12 17:24:30"
+  sensor_id: "7XnG6nS2JbcyAKoUfTqHhbSben1f684t"
+
+previous_temp:
+  temp: 23
+  created_at: "2018-11-12 17:00:00"
+  sensor_id: "7XnG6nS2JbcyAKoUfTqHhbSben1f684t"
+
+one:
+  temp: 20.5
+  created_at: "2018-11-12 16:00:00"
+  sensor_id: "7XnG6nS2JbcyAKoUfTqHhbSben1f684t"
+
+two:
+  temp: 18
+  created_at: "2018-11-12 15:00:00"
+  sensor_id: "7XnG6nS2JbcyAKoUfTqHhbSben1f684t"
+
+other_sensor_one:
+  temp: 21
+  created_at: "2018-11-12 18:00:00"
+  sensor_id: "RKVPmgyGfQU43UTFBuguyubG0cbKKaA9"
+
+other_sensor_two:
+  temp: 19.5
+  created_at: "2018-11-12 15:00:00"
+  sensor_id: "RKVPmgyGfQU43UTFBuguyubG0cbKKaA9"

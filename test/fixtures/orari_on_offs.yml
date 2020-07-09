@@ -4,8 +4,16 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-one: {}
-# column: value
-#
-two: {}
-# column: value
+one:
+  room_id: 1
+  giorno: 0
+  fascia: 0
+  orario_accensione: "6:30"
+  orario_spegnimento: "8:30"
+
+two:
+  room_id: 1
+  giorno: 1
+  fascia: 0
+  orario_accensione: "6:30"
+  orario_spegnimento: "8:30"
