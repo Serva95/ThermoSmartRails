@@ -21,11 +21,11 @@ class RoomsController < ApplicationController
   # POST /rooms
   def create
     @room = Room.new(room_params)
-    if @room.sensor_id.empty?
+    if  @room.sensor_id.nil? || @room.sensor_id.empty?
       @room.sensor_id = nil
     end
     respond_to do |format|
-      if @room.save!
+      if @room.save
         format.html { redirect_to rooms_path , notice: 'Stanza creata' }
         format.json { render :index, status: :created, location: @room }
       else

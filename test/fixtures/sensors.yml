@@ -13,3 +13,8 @@ two:
   id: "RKVPmgyGfQU43UTFBuguyubG0cbKKaA9"
   nome: "sensore2"
   location: "location2"
+
+not_associated_with_room:
+  id: "AAABBBccc111222333444555666DDDXY"
+  nome: "sensore_non_associato"
+  location: "location_non_definita"

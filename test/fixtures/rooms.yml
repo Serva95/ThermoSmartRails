@@ -16,11 +16,22 @@ one:
   manual_off: false
 
 two:
+  id: 2
   nome: "stanza2"
   max_temp: 21.1
   min_temp: 19.5
   absolute_min: 7.5
   sensor_id: "RKVPmgyGfQU43UTFBuguyubG0cbKKaA9"
+  manual_active: false
+  manual_inactive: false
+  manual_off: false
+
+without_sensor:
+  id: 10
+  nome: "stanza2"
+  max_temp: 25.1
+  min_temp: 19.5
+  absolute_min: 3.5
   manual_active: false
   manual_inactive: false
   manual_off: false

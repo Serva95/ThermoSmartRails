@@ -1,7 +1,22 @@
+class TempValidator < ActiveModel::Validator
+  def validate(record)
+    if record.temp.blank?
+      record.errors[:temp] << " non può essere vuoto"
+    end
+    if record.sensor_id.blank?
+      record.errors[:sensor_id] << " non può essere vuoto"
+    end
+  end
+end
+
 class Temp < ApplicationRecord
   attr_accessor :day
-
   belongs_to :sensor
+
+  validates_with TempValidator
+
+  validates :temp, presence: true
+  validates :sensor_id, presence: true
 
   def self.find_room_temps(sensor_id)
     temps = Temp.select("id", "temp", "created_at").where(:sensor_id => sensor_id).order(created_at: :desc).limit(100)

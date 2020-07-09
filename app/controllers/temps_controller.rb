@@ -36,7 +36,7 @@ class TempsController < ApplicationController
   private
 
   def temp_params
-    params.require(:temp).permit(:temp, :hum, :sensor_id)
+    params.require(:temp).permit(:temp, :sensor_id)
   end
 
 end
