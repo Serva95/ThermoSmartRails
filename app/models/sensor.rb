@@ -2,6 +2,9 @@ class SensorValidator < ActiveModel::Validator
   def validate(record)
     if record.id.blank?
       record.errors[:id] << " non può essere vuoto"
+      end
+    if record.id.length < 32
+      record.errors[:id] << " non può essere minore di 32 caratteri"
     end
     if record.nome.blank?
       record.errors[:nome] << " non può essere vuoto"

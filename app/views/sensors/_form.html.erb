@@ -2,7 +2,7 @@
   <%unless @sensor.nil?
       if @sensor.errors.any? %>
       <div id="error_explanation" class="col-12 col-12-mobilep">
-        <h2><%= pluralize(@sensor.errors.count, "error") %> Errore nel salvataggio del sensore:</h2>
+        <h2><%= pluralize(@sensor.errors.count, "Errore/i") %> nel salvataggio del sensore:</h2>
         <ul>
           <% @sensor.errors.full_messages.each do |message| %>
             <li><%= message %></li>
