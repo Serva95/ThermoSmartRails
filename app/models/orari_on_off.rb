@@ -1,11 +1,15 @@
 class OrariOnOff < ApplicationRecord
   belongs_to :room
 
+  def self.find_orari(room_id, giorno)
+    OrariOnOff.where(:room_id => room_id, :giorno => giorno)
+  end
+
   def self.parse(params)
     orari = []
     giorno = []
-    params.each do |key, value|
-      if value[:timeonuno] >= value[:timeoffuno]
+    params.each do |k, value|
+      if value[:timeonuno].blank? || value[:timeoffuno].blank? || value[:timeonuno] >= value[:timeoffuno]
         orari = nil
         break
       else
@@ -36,44 +40,17 @@ class OrariOnOff < ApplicationRecord
     return orari
   end
 
-  def self.save_all(orari, room_id)
-    fascia = 0
-    ActiveRecord::Base.transaction do
-      orari.each_with_index { |value, giorno|
-        value.each_slice(2) do |orari_fascia|
-          orari_to_db = OrariOnOff.new
-          orari_to_db.room_id = room_id
-          orari_to_db.giorno = giorno
-          orari_to_db.fascia = fascia
-          orari_to_db.orario_accensione = orari_fascia[0]
-          orari_to_db.orario_spegnimento = orari_fascia[1]
-          fascia += 1
-          orari_to_db.save
-        end
-        fascia = 0
-      }
-      after_commit do
-        return true
-      end
-    end
-  end
-
-  def self.find_orari(room_id, giorno)
-    OrariOnOff.where(:room_id => room_id, :giorno => giorno)
-  end
-
   def self.parse_edit(params)
     error = false
     delete = Array.new(2, false)
     orari = params[:orari_on_off]
     orario_uno = OrariOnOff.find(params[:id_1])
     # verifico che orario on 1 sia dopo orario off 1
-    if orari[:timeonuno] >= orari[:timeoffuno]
+    if orari[:timeonuno].blank? || orari[:timeoffuno].blank? || orari[:timeonuno] >= orari[:timeoffuno]
       error = true
     end
     orario_uno.orario_accensione = orari[:timeonuno]
     orario_uno.orario_spegnimento = orari[:timeoffuno]
-
     # caso possibile di insert new per orario 2 e 3
     if params[:id_2].nil?
       # controllo che ci siano i dati sennò salto - non è insert new
@@ -89,7 +66,6 @@ class OrariOnOff < ApplicationRecord
         orario_due.fascia = 1
         orario_due.orario_accensione = orari[:timeondue]
         orario_due.orario_spegnimento = orari[:timeoffdue]
-
         # controllo che ci siano i dati sennò salto
         unless orari[:timeontre].blank? && orari[:timeofftre].blank?
           # verifico che orario on 3 sia dopo orario off 3 e che orario on 3 sia dopo orario off 2
@@ -105,7 +81,7 @@ class OrariOnOff < ApplicationRecord
           orario_tre.orario_spegnimento = orari[:timeofftre]
         end
       end
-    # se c'è id 2 è update o delete del vecchio
+      # se c'è id 2 è update o delete del vecchio
     else
       orario_due = OrariOnOff.find(params[:id_2])
       # se ci siono i dati è update sennò è delete
@@ -137,7 +113,6 @@ class OrariOnOff < ApplicationRecord
         end
       end
     end
-
     # se c'è id 3 è update o delete del vecchio - insert new gestito sopra
     unless params[:id_3].nil?
       orario_tre = OrariOnOff.find(params[:id_3])
@@ -154,14 +129,12 @@ class OrariOnOff < ApplicationRecord
         orario_tre.orario_spegnimento = orari[:timeofftre]
       end
     end
-
     # se ci sono errori non salvo nulla e mostro l'errore - sennò salvo tutto
     if error
       return false
     else
       ActiveRecord::Base.transaction do
         orario_uno.save
-
         if delete[0]
           orario_due.delete
         else
@@ -177,10 +150,33 @@ class OrariOnOff < ApplicationRecord
           end
         end
       end
-
       after_commit do
         true
       end
+    end
+  end
+
+  def self.save_all(orari, room_id)
+    fascia = 0
+    begin
+      ActiveRecord::Base.transaction do
+        orari.each_with_index { |value, giorno|
+          value.each_slice(2) do |orari_fascia|
+            orari_to_db = OrariOnOff.new
+            orari_to_db.room_id = room_id
+            orari_to_db.giorno = giorno
+            orari_to_db.fascia = fascia
+            orari_to_db.orario_accensione = orari_fascia[0]
+            orari_to_db.orario_spegnimento = orari_fascia[1]
+            fascia += 1
+            orari_to_db.save
+          end
+          fascia = 0
+        }
+      end
+      true
+    rescue
+      false
     end
   end
 

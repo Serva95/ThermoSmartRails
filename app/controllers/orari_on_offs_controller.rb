@@ -19,8 +19,8 @@ class OrariOnOffsController < ApplicationController
         format.html { redirect_to new_room_orari_on_off_path(params[:room_id]), notice: 'Errore nell\'inserimento degli orari, controlla meglio e riprova'   }
         format.json { render json: @orario.errors, status: :unprocessable_entity }
       else
-        #ciclare il salvataggio in una transaction ActiveRecord::Base.transaction do
-        if OrariOnOff.save_all(@orario, params[:room_id])
+        result = OrariOnOff.save_all(@orario, params[:room_id])
+        if result
           format.html { redirect_to room_orari_on_offs_path(params[:room_id]) , notice: 'Orari salvati' }
           format.json { render :index, status: :created, location: @orario }
         end

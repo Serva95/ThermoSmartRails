@@ -11,6 +11,20 @@ one:
   orario_accensione: "6:30"
   orario_spegnimento: "8:30"
 
+one_a:
+  room_id: 1
+  giorno: 0
+  fascia: 0
+  orario_accensione: "9:30"
+  orario_spegnimento: "12:30"
+
+one_b:
+  room_id: 1
+  giorno: 0
+  fascia: 0
+  orario_accensione: "15:00"
+  orario_spegnimento: "20:00"
+
 two:
   room_id: 1
   giorno: 1
