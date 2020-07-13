@@ -84,8 +84,10 @@
                     console.log(request.responseText + " STATUS: " + status + " ERROR: " + error);
                 }
             });
-            setTimeout( updateTemps, 840000 );
-            // un update ogni 14 minuti
+            //setTimeout( updateTemps, 840000 );
+            // ogni 14 minuti
+            setTimeout( updateTemps, 540000 )
+            // un update ogni 9 minuti
             //setTimeout( updateTemps, 25000 );
         }
 

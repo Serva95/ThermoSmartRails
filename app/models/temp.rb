@@ -19,7 +19,7 @@ class Temp < ApplicationRecord
   validates :sensor_id, presence: true
 
   def self.find_room_temps(sensor_id)
-    temps = Temp.select("id", "temp", "created_at").where(:sensor_id => sensor_id).order(created_at: :desc).limit(100)
+    temps = Temp.select("id", "temp", "created_at").where(:sensor_id => sensor_id).order(created_at: :desc).limit(150)
     temps.reverse
   end
 

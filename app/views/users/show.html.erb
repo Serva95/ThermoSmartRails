@@ -15,7 +15,9 @@
       <strong>Email:</strong> <%= @user.email %>
     </h4>
     <h4 class="col-12 col-12-mobile">
-      <strong>Remember creato il:</strong> <%= @user.remember_created_at.strftime("%d-%m-%Y alle %H:%M:%S") %> <strong>valido fino al:</strong> <%= (@user.remember_created_at + 3.weeks).strftime("%d-%m-%Y alle %H:%M:%S") %>
+      <% unless @user.remember_created_at.nil? %>
+        <strong>Remember creato il:</strong> <%= @user.remember_created_at.strftime("%d-%m-%Y alle %H:%M:%S") %> <strong>valido fino al:</strong> <%= (@user.remember_created_at + 3.weeks).strftime("%d-%m-%Y alle %H:%M:%S") %>
+      <%end %>
     </h4>
   <%end %>
 </div>

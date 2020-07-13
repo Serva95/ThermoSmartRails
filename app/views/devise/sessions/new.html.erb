@@ -16,7 +16,7 @@
   <% if devise_mapping.rememberable? %>
     <div class="col-12 col-12-mobile"><br></div>
     <div class="col-12 col-12-mobile">
-      <%= f.check_box :remember_me %>
+      <%= f.check_box :remember_me, checked: true%>
       <%= f.label :remember_me, "Ricordami" %>
     </div>
   <% end %>
