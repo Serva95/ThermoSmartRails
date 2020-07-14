@@ -21,7 +21,7 @@ class RoomsController < ApplicationController
   # POST /rooms
   def create
     @room = Room.new(room_params)
-    if  @room.sensor_id.nil? || @room.sensor_id.empty?
+    if @room.sensor_id.nil? || @room.sensor_id.empty?
       @room.sensor_id = nil
     end
     respond_to do |format|
@@ -60,7 +60,7 @@ class RoomsController < ApplicationController
   # PATCH/PUT /rooms/:id
   def update
     paramz = room_params
-    if room_params[:sensor_id].empty?
+    if room_params[:sensor_id].nil? || room_params[:sensor_id].empty?
       paramz[:sensor_id] = nil
       @room.sensor_id = nil
     end

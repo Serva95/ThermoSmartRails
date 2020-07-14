@@ -17,7 +17,8 @@
   </div>
   <%if @room.sensor_id.nil? %>
     <div class="col-8 col-12-mobile">
-      <h4>Ancora non è stato associato nessun sensore a questa stanza, clicca sul bottone per associarne uno</h4>
+      <h4>Ancora non &egrave; stato associato nessun sensore a questa stanza, clicca sul bottone per associarne uno</h4>
+      <h5>Senza sensore associato la stanza non pu&ograve; registrare le temperature e quindi il sistema di controllo non funzioner&agrave;</h5>
     </div>
     <div class="col-4 col-12-mobile">
       <%= link_to "Associa il sensore", edit_room_path(@room), {class: 'button'} %>
@@ -50,28 +51,28 @@
   </div>
   <%if @room.manual_active%>
     <div class="col-12 col-12-mobile">
-      <h4>Attualmente nella stanza è attivo il controllo manuale per mantenere la temperatura massima impostata</h4>
+      <h4>Attualmente nella stanza &egrave; attivo il controllo manuale per mantenere la temperatura massima impostata</h4>
     </div>
     <div class="col-12 col-12-mobile">
       <%=link_to "Ritorna al controllo automatico", room_manual_active_path(@room), method: :put, class: 'button' %>
     </div>
   <%elsif @room.manual_inactive%>
     <div class="col-12 col-12-mobile">
-      <h4>Attualmente nella stanza è attivo il controllo manuale per mantenere la temperatura minima impostata</h4>
+      <h4>Attualmente nella stanza &egrave; attivo il controllo manuale per mantenere la temperatura minima impostata</h4>
     </div>
     <div class="col-12 col-12-mobile">
       <%=link_to "Ritorna al controllo automatico", room_manual_inactive_path(@room), method: :put, class: 'button' %>
     </div>
   <%elsif @room.manual_off %>
     <div class="col-12 col-12-mobile">
-      <h4>Attualmente il controllo nella stanza è inattivo ed è impostata per mantenere la temperatura minima assoluta</h4>
+      <h4>Attualmente il controllo nella stanza &egrave; inattivo ed &egrave; impostata per mantenere la temperatura minima assoluta</h4>
     </div>
     <div class="col-12 col-12-mobile">
       <%=link_to "Ritorna al controllo automatico", room_manual_off_path(@room), method: :put, class: 'button' %>
     </div>
   <%else %>
     <div class="col-12 col-12-mobile">
-      <h4>Attualmente la stanza è controllata automaticamente dal sistema secondo gli orari impostati</h4>
+      <h4>Attualmente la stanza &egrave; controllata automaticamente dal sistema secondo gli orari impostati</h4>
     </div>
     <div class="col-12 col-12-mobile"><hr></div>
     <div class="col-8 col-12-narrower">
@@ -87,7 +88,7 @@
       <%=link_to "Attiva manuale minimo", room_manual_inactive_path(@room), method: :put, class: 'button' %>
     </div>
     <div class="col-8 col-12-narrower">
-      <h4>Clicca sul bottone e disattiva il controllo automatico sulla stanza, verrà mantenuta la temperatura minima assoluta</h4>
+      <h4>Clicca sul bottone e disattiva il controllo automatico sulla stanza, verr&agrave; mantenuta la temperatura minima assoluta</h4>
     </div>
     <div class="col-4 col-12-narrower">
       <%=link_to "Spegni il sistema di controllo", room_manual_off_path(@room), method: :put, class: 'button' %>

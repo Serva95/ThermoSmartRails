@@ -19,6 +19,7 @@ class TempsController < ApplicationController
     end
   end
 
+  # POST /sensors/:id/temps"
   def create
     @temp = Temp.new(temp_params)
     respond_to do |format|
