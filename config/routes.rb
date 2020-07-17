@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   devise_for :users, controllers: {sessions:'users/sessions', registrations: 'users/registrations',
                                    passwords:'users/passwords', confirmations: 'users/confirmations'}
 
-  devise_scope :room do
+  devise_scope :user do
     get '/user/sign_out', to: 'users/sessions#destroy'
   end
 
