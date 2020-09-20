@@ -1,0 +1,12 @@
+<div class="row gtr-uniform">
+  <div class="col-2 col-4-mobile ">
+    <%= link_to 'Back', rooms_path, class: "button icon solid fa-chevron-left"%>
+  </div>
+  <div class="col-9 col-8-mobile">
+    <h2>Modifica la VMC: "<%= @vmc.id %>"</h2>
+  </div>
+
+  <hr class="col-12 col-12-mobile">
+</div>
+<br>
+<%= render 'form_edit', vmc: @vmc %>

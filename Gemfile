@@ -9,6 +9,7 @@ gem 'jquery-rails'
 gem 'rails', '~> 6.0.3'
 # Use mysql as the database for Active Record
 gem 'mysql2', '>= 0.4.4'
+gem 'pg'
 # Use Puma as the app server
 gem 'puma', '~> 4.1'
 #gem "passenger", '>= 6.0'#, require: "phusion_passenger/rack_handler"

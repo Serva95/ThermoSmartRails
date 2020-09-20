@@ -1,0 +1,2 @@
+class Vmc < ApplicationRecord
+end

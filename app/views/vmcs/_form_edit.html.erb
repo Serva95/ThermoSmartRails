@@ -1,0 +1,47 @@
+<%= form_for @vmc, url: vmc_path, method: "put", html: {class: "row gtr-uniform"} do |form| %>
+  <%unless @vmc.nil?
+      if @vmc.errors.any? %>
+      <div id="error_explanation" class="col-12 col-12-mobilep">
+        <h2><%= pluralize(@vmc.errors.count, "error") %> Errore nella modifica della vmc:</h2>
+        <ul>
+          <% @vmc.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end
+       end%>
+
+  <div class="col-6 col-12-mobile">
+    <%= form.label :id, "ID univoco della vmc"%>
+    <%= form.text_field :id, placeholder: "ID univoco della vmc", required: true, minlength: 32, maxlength: 32 %>
+  </div>
+  <div class="col-6 col-12-mobile"></div>
+  <div class="col-3 col-6-mobile">
+    <%= form.label :programmed_on_time, "Orario programmato di accensione"%>
+    <%= form.time_field :programmed_on_time%>
+  </div>
+  <div class="col-3 col-6-mobile">
+    <label> &nbsp;</label>
+    <input type="button" id="removeOn" value="Rimuovi timer accensione"/>
+  </div>
+  <div class="col-3 col-6-mobile">
+    <%= form.label :programmed_off_time, "Orario programmato di spegnimento"%>
+    <%= form.time_field :programmed_off_time%>
+  </div>
+  <div class="col-3 col-6-mobile">
+    <label> &nbsp;</label>
+    <input type="button" id="removeOff" value="Rimuovi timer spegnimento"/>
+  </div>
+  <div class="col-12 col-12-mobile">
+    <%= form.submit "Applica le modifiche alla VMC" %>
+  </div>
+  <script>
+      $("#removeOn").click(function(){
+          $("#vmc_programmed_on_time").val("");
+      })
+      $("#removeOff").click(function(){
+          $("#vmc_programmed_off_time").val("");
+      })
+  </script>
+<% end %>

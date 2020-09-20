@@ -9,6 +9,14 @@
 # And be sure to use new-style password hashing:
 #   https://dev.mysql.com/doc/refman/5.7/en/password-hashing.html
 #
+postgres: &postgres
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  username: postgres
+  password: password
+  timeout: 5000
+
 default: &default
   adapter: mysql2
   encoding: utf8mb4
@@ -18,7 +26,7 @@ default: &default
   host: localhost
 
 development:
-  <<: *default
+  <<: *postgres
   database: thermo_rails
 
 # Warning: The database defined as "test" will be erased and
@@ -48,7 +56,7 @@ test:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
 production:
-  <<: *default
+  <<: *postgres
   database: ThermoSmart_production
   username: ThermoSmart
   password: <%= ENV['THERMOSMART_DATABASE_PASSWORD'] %>

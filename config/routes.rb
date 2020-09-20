@@ -25,6 +25,10 @@ Rails.application.routes.draw do
   resources :sensors, only: [:index, :new, :edit, :create, :update, :destroy] do
     resources :temps, only: [:create]
   end
+  resources :vmcs, only: [:index, :new, :edit, :create, :update, :destroy] do
+    put "on", to: "vmcs#on"
+    put "off", to: "vmcs#off"
+  end
 
 
   #development.rb config.consider_all_requests_local = false

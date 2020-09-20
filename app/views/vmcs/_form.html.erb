@@ -1,0 +1,22 @@
+<%= form_for @vmc, url: vmcs_path, method: "post", html: {class: "row gtr-uniform"} do |form| %>
+  <%unless @vmc.nil?
+      if @vmc.errors.any? %>
+      <div id="error_explanation" class="col-12 col-12-mobilep">
+        <h2><%= pluralize(@vmc.errors.count, "error") %> Errore nel salvataggio della vmc:</h2>
+        <ul>
+          <% @vmc.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end
+       end%>
+
+  <div class="col-6 col-12-mobile">
+    <%= form.label :id, "ID univoco della vmc"%>
+    <%= form.text_field :id, placeholder: "ID univoco della vmc", required: true, minlength: 32, maxlength: 32 %>
+  </div>
+  <div class="col-12 col-12-mobile">
+    <%= form.submit "Inserisci la VMC" %>
+  </div>
+<% end %>

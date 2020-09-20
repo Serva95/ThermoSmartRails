@@ -1,0 +1,61 @@
+<div class="row gtr-uniform">
+  <div class="col-2 col-4-mobile ">
+    <%= link_to 'Back', root_path, class: "button icon solid fa-chevron-left"%>
+  </div>
+  <div class="col-2 col-8-mobile">
+    <h2>La tua VMC</h2>
+  </div>
+  <% if @vmcs.present? %>
+    <div class="col-8 col-12-mobilep">
+      <h4>&Egrave; gi&agrave; presente una VMC nel sistema, per inserirne una nuova, elimina prima quella registrata a sistema</h4>
+    </div>
+  <% else %>
+    <div class="col-5 col-12-mobile">
+    </div>
+    <div class="col-3 col-12-mobilep">
+      <%= link_to "Crea una nuova vmc", new_vmc_path, {class: 'button'} %>
+    </div>
+  <% end %>
+
+  <% if @vmcs.present? %>
+    <div class="col-12 col-12-mobile">
+      <hr>
+    </div>
+    <% @vmcs.each do |vmc| %>
+      <div class="col-6 col-12-mobile">
+        ID univoco della vmc: <h3><b><%= vmc.id %></b></h3>
+      </div>
+      <div class="col-3 col-12-mobile">
+        Stato attuale di funzionamento della vmc: <h3><b><%= vmc.stato_attuale ? "Acceso" : "Spento"%></b></h3>
+      </div>
+      <div class="col-3 col-12-mobile">
+        Stato impostato della vmc: <h3><b><%= vmc.impostazione_funzione ? "In accensione/acceso" : "In spegnimento/spento"%></b></h3>
+      </div>
+      <div class="col-6 col-12-mobile">
+        Timer di accensione programmata <i>(clicca su modifica per impostarlo o cambiarlo)</i>: <h3><b><%= vmc.programmed_on_time.nil? ? "Nessun timer impostato" : vmc.programmed_on_time.strftime("%H:%M")%></b></h3>
+      </div>
+      <div class="col-6 col-12-mobile">
+        Timer di spegnimento programmato <i>(clicca su modifica per impostarlo o cambiarlo)</i>: <h3><b><%= vmc.programmed_off_time.nil? ? "Nessun timer impostato" : vmc.programmed_off_time.strftime("%H:%M")%></b></h3>
+      </div>
+      <div class="col-6 col-6-mobile">
+        <%if vmc.impostazione_funzione %>
+          <%=link_to "Spegni la VMC", vmc_off_path(vmc), method: :put, class: 'button' %>
+        <%else %>
+          <%=link_to "Accendi la VMC", vmc_on_path(vmc), method: :put, class: 'button' %>
+        <%end %>
+      </div>
+      <div class="col-2 col-3-mobile">
+        <%= link_to '', edit_vmc_path(vmc), class: 'far fa-edit fa-3x', title: 'Modifica la vmc'%>
+      </div>
+      <div class="col-2 col-3-mobile">
+        <%= link_to '', vmc_path(vmc), method: :delete, data: { confirm: 'Sicuro di voler eliminare questa vmc? Verranno eliminate anche tutte impostazioni associate' }, class: 'far fa-trash-alt fa-3x', title: 'Elimina questa vmc'%>
+      </div>
+      <div class="col-12 col-12-mobile"><hr></div>
+    <% end %>
+
+  <% else %>
+    <div class="col-12 col-12-mobile">
+      <h3>Non c'&egrave; alcuna vmc, inizia creandone una</h3>
+    </div>
+  <% end %>
+</div>
